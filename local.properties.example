@@ -1,0 +1,3 @@
+# Diese Datei in `local.properties` umbenennen.
+# Pfad zum Android SDK auf deiner Maschine:
+sdk.dir=C\:\\android-sdk

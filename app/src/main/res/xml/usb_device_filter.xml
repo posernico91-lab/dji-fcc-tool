@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DJI N1 Remote (initialisiert): VID 0x2CA3 = 11427, PID 0x1020 = 4128.
+         Strikt: nur exakt diese Kombination triggert den Auto-Launch der App. -->
+    <usb-device vendor-id="11427" product-id="4128" />
+</resources>

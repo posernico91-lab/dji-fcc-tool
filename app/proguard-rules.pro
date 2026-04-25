@@ -1,0 +1,4 @@
+-dontwarn androidx.compose.**
+-keep class dagger.hilt.** { *; }
+-keep class androidx.hilt.** { *; }
+-keepattributes *Annotation*
