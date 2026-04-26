@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -60,7 +61,7 @@ fun MainScreen(viewModel: MainViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("RangeBoost FCC", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -93,7 +94,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 PrivacyOptionsButton()
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Entwickelt von Poser.py",
+                    stringResource(R.string.developer_credit),
                     fontSize = 11.sp,
                     color = Color(0xFF888888),
                     modifier = Modifier.fillMaxWidth(),

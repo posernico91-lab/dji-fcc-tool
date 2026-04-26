@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">Déverrouilleur de portée DJI Mini</string>
+    <string name="developer_credit">Développé par Poser.py</string>
+    <string name="connect">Scanner USB</string>
+    <string name="status_check">Vérifier l\'état</string>
+    <string name="force_fcc">Activer FCC</string>
+    <string name="reset_ce">Réinitialiser / CE</string>
+    <string name="disconnect">Déconnecter</string>
+    <string name="privacy_options">Options de confidentialité</string>
+</resources>

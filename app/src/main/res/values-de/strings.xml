@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">DJI Mini Reichweiten-Unlocker</string>
+    <string name="developer_credit">Entwickelt von Poser.py</string>
+    <string name="connect">USB scannen</string>
+    <string name="status_check">Status prüfen</string>
+    <string name="force_fcc">FCC aktivieren</string>
+    <string name="reset_ce">Zurücksetzen / CE</string>
+    <string name="disconnect">Verbindung trennen</string>
+    <string name="privacy_options">Datenschutz-Einstellungen</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">Desbloqueador de alcance DJI Mini</string>
+    <string name="developer_credit">Desenvolvido por Poser.py</string>
+    <string name="connect">Escanear USB</string>
+    <string name="status_check">Verificar estado</string>
+    <string name="force_fcc">Ativar FCC</string>
+    <string name="reset_ce">Redefinir / CE</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="privacy_options">Opções de privacidade</string>
+</resources>

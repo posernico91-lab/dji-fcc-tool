@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">DJI Mini bereik-ontgrendelaar</string>
+    <string name="developer_credit">Ontwikkeld door Poser.py</string>
+    <string name="connect">USB scannen</string>
+    <string name="status_check">Status controleren</string>
+    <string name="force_fcc">FCC activeren</string>
+    <string name="reset_ce">Resetten / CE</string>
+    <string name="disconnect">Verbinding verbreken</string>
+    <string name="privacy_options">Privacy-instellingen</string>
+</resources>

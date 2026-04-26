@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">DJI Mini 距离解锁器</string>
+    <string name="developer_credit">由 Poser.py 开发</string>
+    <string name="connect">扫描 USB</string>
+    <string name="status_check">检查状态</string>
+    <string name="force_fcc">启用 FCC</string>
+    <string name="reset_ce">重置 / CE</string>
+    <string name="disconnect">断开连接</string>
+    <string name="privacy_options">隐私设置</string>
+</resources>

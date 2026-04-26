@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">Разблокировщик дальности DJI Mini</string>
+    <string name="developer_credit">Разработано Poser.py</string>
+    <string name="connect">Сканировать USB</string>
+    <string name="status_check">Проверить статус</string>
+    <string name="force_fcc">Включить FCC</string>
+    <string name="reset_ce">Сброс / CE</string>
+    <string name="disconnect">Отключить</string>
+    <string name="privacy_options">Настройки конфиденциальности</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FCC Switch</string>
+    <string name="app_tagline">Odblokowanie zasięgu DJI Mini</string>
+    <string name="developer_credit">Stworzone przez Poser.py</string>
+    <string name="connect">Skanuj USB</string>
+    <string name="status_check">Sprawdź status</string>
+    <string name="force_fcc">Włącz FCC</string>
+    <string name="reset_ce">Resetuj / CE</string>
+    <string name="disconnect">Rozłącz</string>
+    <string name="privacy_options">Ustawienia prywatności</string>
+</resources>
