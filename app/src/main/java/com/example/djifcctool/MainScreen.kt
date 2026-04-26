@@ -61,7 +61,17 @@ fun MainScreen(viewModel: MainViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold) },
+                title = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(R.drawable.app_logo),
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -427,11 +437,26 @@ private fun SafetyCard() {
 private fun PrivacyOptionsButton() {
     val context = androidx.compose.ui.platform.LocalContext.current
     val activity = context as? android.app.Activity ?: return
-    if (!ConsentManager.isPrivacyOptionsRequired()) return
-    OutlinedButton(
-        onClick = { ConsentManager.showPrivacyOptionsForm(activity) },
-        modifier = Modifier.fillMaxWidth()
-    ) { Text("Datenschutzeinstellungen / Werbung") }
+    Column(modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(
+            onClick = {
+                if (ConsentManager.isPrivacyOptionsRequired()) {
+                    ConsentManager.showPrivacyOptionsForm(activity)
+                } else {
+                    // Erzwinge erneutes Laden + Anzeigen des Consent-Forms
+                    ConsentManager.forceShowConsentForm(activity)
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Datenschutzeinstellungen / Werbung") }
+        if (BuildConfig.DEBUG) {
+            Spacer(Modifier.height(4.dp))
+            OutlinedButton(
+                onClick = { ConsentManager.resetAndReshow(activity) },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text("\uD83D\uDD27 Consent zurücksetzen (Debug)") }
+        }
+    }
 }
 
 @Composable

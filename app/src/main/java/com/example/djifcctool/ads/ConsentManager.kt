@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.example.djifcctool.BuildConfig
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
+import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
@@ -37,10 +39,19 @@ object ConsentManager {
      * onReady wird aufgerufen, sobald die App Ads laden darf.
      */
     fun requestConsent(activity: Activity, onReady: (canRequestAds: Boolean) -> Unit) {
-        val params = ConsentRequestParameters.Builder()
-            // Bei Bedarf für Tests: ConsentDebugSettings hier setzen.
+        val paramsBuilder = ConsentRequestParameters.Builder()
             .setTagForUnderAgeOfConsent(false)
-            .build()
+        if (BuildConfig.DEBUG) {
+            // Im Debug-Build: Geografie auf EEA forcen, damit der
+            // Consent-Dialog auch auf Test-Ger\u00e4ten au\u00dferhalb der EU
+            // verl\u00e4sslich erscheint.
+            val debug = ConsentDebugSettings.Builder(activity)
+                .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
+                .addTestDeviceHashedId("TEST-DEVICE-HASHED-ID")
+                .build()
+            paramsBuilder.setConsentDebugSettings(debug)
+        }
+        val params = paramsBuilder.build()
 
         val info = UserMessagingPlatform.getConsentInformation(activity).also {
             consentInformation = it
@@ -60,6 +71,35 @@ object ConsentManager {
                 onReady(info.canRequestAds())
             }
         )
+    }
+
+    /**
+     * Erzwingt das erneute Anzeigen des Consent-Forms (auch wenn der
+     * Nutzer bereits zugestimmt hat). N\u00fctzlich, wenn der Nutzer
+     * \u00fcber den Datenschutz-Button die Auswahl \u00e4ndern m\u00f6chte
+     * und [isPrivacyOptionsRequired] aktuell false zur\u00fcckgibt.
+     */
+    fun forceShowConsentForm(activity: Activity) {
+        UserMessagingPlatform.loadConsentForm(activity, { form ->
+            form.show(activity) { error ->
+                if (error != null) Log.w(TAG, "force consent form error: ${error.message}")
+            }
+        }, { error ->
+            Log.w(TAG, "loadConsentForm error: ${error.message}")
+        })
+    }
+
+    /**
+     * Setzt den UMP-Status komplett zur\u00fcck (Debug-Helfer) und
+     * fordert den Consent erneut an.
+     */
+    fun resetAndReshow(activity: Activity) {
+        consentInformation?.reset()
+            ?: UserMessagingPlatform.getConsentInformation(activity).also {
+                consentInformation = it
+                it.reset()
+            }
+        requestConsent(activity) { /* no-op */ }
     }
 
     /** Privacy-Options-Form: über Einstellungs-Eintrag erreichbar. */
