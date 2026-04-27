@@ -1,6 +1,15 @@
 package com.example.djifcctool
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -43,6 +53,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -64,32 +77,66 @@ fun MainScreen(viewModel: MainViewModel) {
     val scrollState = rememberScrollState()
     val context = androidx.compose.ui.platform.LocalContext.current
     Scaffold(
+        containerColor = FccColors.DeepSpace,
         topBar = {
-            TopAppBar(
-                title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        androidx.compose.foundation.Image(
-                            painter = androidx.compose.ui.res.painterResource(R.drawable.app_logo),
-                            contentDescription = null,
-                            modifier = Modifier.size(32.dp)
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(FccColors.HudGradient)
+                    .border(width = 0.5.dp, brush = FccColors.GlowGradient, shape = RoundedCornerShape(0.dp))
+            ) {
+                TopAppBar(
+                    title = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(38.dp)
+                                    .shadow(8.dp, CircleShape, ambientColor = FccColors.Cyan, spotColor = FccColors.Cyan)
+                                    .clip(CircleShape)
+                                    .background(FccColors.SurfaceHigh),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                androidx.compose.foundation.Image(
+                                    painter = androidx.compose.ui.res.painterResource(R.drawable.app_logo),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(30.dp).clip(CircleShape)
+                                )
+                            }
+                            Spacer(Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    stringResource(R.string.app_name).uppercase(),
+                                    fontWeight = FontWeight.Black,
+                                    color = FccColors.TextHigh,
+                                    fontSize = 18.sp,
+                                    letterSpacing = 2.sp
+                                )
+                                Text(
+                                    "• FCC PATCH CONSOLE •",
+                                    fontFamily = FontFamily.Monospace,
+                                    color = FccColors.Cyan,
+                                    fontSize = 9.sp,
+                                    letterSpacing = 2.sp
+                                )
+                            }
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent,
+                        titleContentColor = FccColors.TextHigh
+                    )
                 )
-            )
+            }
         }
     ) { padding ->
-        Surface(
-            color = MaterialTheme.colorScheme.background,
-            modifier = Modifier.fillMaxSize().padding(padding)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FccColors.HudGradient)
+                .padding(padding)
         ) {
             Column(modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 14.dp, vertical = 12.dp)
                 .verticalScroll(scrollState)
             ) {
                 if (state.safeMode) SafeModeBanner()
@@ -157,57 +204,143 @@ private fun ConfirmPatchDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 
 @Composable
 private fun SafeModeBanner() {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE082)),
+    HudPanel(
+        accent = FccColors.Amber,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(Modifier.padding(12.dp)) {
-            Text("⚠️  SAFE-MODE aktiv (Trockenlauf)", fontWeight = FontWeight.Bold)
+        Column(Modifier.padding(14.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(FccColors.Amber)
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "SAFE-MODE • DRY RUN",
+                    fontWeight = FontWeight.Black,
+                    color = FccColors.Amber,
+                    fontSize = 13.sp,
+                    letterSpacing = 1.5.sp
+                )
+            }
+            Spacer(Modifier.height(6.dp))
             Text(
                 "Es werden KEINE Bytes an die Hardware gesendet. " +
-                    "Die App protokolliert nur, welche Pakete sie senden würde. " +
-                    "Zum Aktivieren des realen Sendens DjiFccProtocol.SAFE_MODE = false setzen.",
-                fontSize = 13.sp
+                    "Die App protokolliert nur, welche Pakete sie senden würde.",
+                fontSize = 12.sp,
+                color = FccColors.TextMid
             )
         }
     }
 }
 
+/**
+ * Dunkles HUD-Panel mit subtilem Glow-Border. Ersetzt Material3-Card
+ * für ein deutlich technischeres Look-and-Feel.
+ */
+@Composable
+private fun HudPanel(
+    modifier: Modifier = Modifier,
+    accent: Color = FccColors.Cyan,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .shadow(elevation = 6.dp, shape = RoundedCornerShape(14.dp), ambientColor = accent.copy(alpha = 0.5f), spotColor = accent.copy(alpha = 0.5f))
+            .clip(RoundedCornerShape(14.dp))
+            .background(FccColors.PanelGradient)
+            .border(
+                width = 1.dp,
+                brush = Brush.linearGradient(
+                    listOf(accent.copy(alpha = 0.7f), accent.copy(alpha = 0.05f), accent.copy(alpha = 0.4f))
+                ),
+                shape = RoundedCornerShape(14.dp)
+            )
+    ) { content() }
+}
+
 @Composable
 private fun StepIndicator(current: WizardStep) {
     val steps = listOf(
-        WizardStep.SCAN to "Scan",
-        WizardStep.CONNECT to "Verbinden",
-        WizardStep.DETECT to "Erkennen",
-        WizardStep.PATCH to "Patch"
+        WizardStep.SCAN to "SCAN",
+        WizardStep.CONNECT to "LINK",
+        WizardStep.DETECT to "PROBE",
+        WizardStep.PATCH to "PATCH"
     )
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        steps.forEachIndexed { index, (step, label) ->
-            val isDone = step.ordinal < current.ordinal
-            val isActive = step == current
-            val color = when {
-                isDone -> MaterialTheme.colorScheme.primary
-                isActive -> MaterialTheme.colorScheme.secondary
-                else -> Color(0xFFBDBDBD)
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .background(color = color, shape = CircleShape),
-                    contentAlignment = Alignment.Center
+    val pulse by rememberInfiniteTransition(label = "pulse").animateFloat(
+        initialValue = 0.45f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1100, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "pulseAlpha"
+    )
+    HudPanel(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            steps.forEachIndexed { index, (step, label) ->
+                val isDone = step.ordinal < current.ordinal
+                val isActive = step == current
+                val color = when {
+                    isDone -> FccColors.Lime
+                    isActive -> FccColors.Cyan
+                    else -> FccColors.SurfaceLine
+                }
+                Column(
+                    modifier = Modifier.weight(1f, fill = false),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .shadow(
+                                elevation = if (isActive) 18.dp else 0.dp,
+                                shape = CircleShape,
+                                ambientColor = color,
+                                spotColor = color
+                            )
+                            .clip(CircleShape)
+                            .background(
+                                if (isActive) color.copy(alpha = pulse)
+                                else if (isDone) color
+                                else FccColors.SurfaceHigh
+                            )
+                            .border(1.dp, color, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = (index + 1).toString(),
+                            color = if (isActive || isDone) Color.Black else FccColors.TextDim,
+                            fontWeight = FontWeight.Black,
+                            fontSize = 14.sp
+                        )
+                    }
+                    Spacer(Modifier.height(4.dp))
                     Text(
-                        text = (index + 1).toString(),
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        label,
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        letterSpacing = 1.sp,
+                        color = if (isActive) FccColors.Cyan else if (isDone) FccColors.Lime else FccColors.TextDim
                     )
                 }
-                Text(label, fontSize = 12.sp)
+                if (index < steps.lastIndex) {
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .height(2.dp)
+                            .padding(horizontal = 4.dp)
+                            .background(
+                                if (step.ordinal < current.ordinal) FccColors.Lime
+                                else FccColors.SurfaceLine
+                            )
+                    )
+                }
             }
         }
     }
@@ -215,23 +348,57 @@ private fun StepIndicator(current: WizardStep) {
 
 @Composable
 private fun StatusCard(state: MainUiState) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    val isLive = !state.isBusy
+    val pulse by rememberInfiniteTransition(label = "live").animateFloat(
+        initialValue = 0.3f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
+        label = "liveAlpha"
+    )
+    HudPanel(modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Status", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Box(
+                    Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background((if (isLive) FccColors.Lime else FccColors.Amber).copy(alpha = pulse))
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "// SYSTEM STATUS",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = FccColors.Cyan
+                )
                 Spacer(Modifier.weight(1f))
-                if (state.isBusy) CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                if (state.isBusy) CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = FccColors.Cyan
+                )
             }
+            Spacer(Modifier.height(10.dp))
+            InfoRow("STEP", "${state.step.ordinal + 1} / 4 — ${state.step.name}")
+            InfoRow("MODE", state.currentMode.name)
+            InfoRow("DEVICE", state.deviceName ?: "—")
+            if (state.vendorId != null) InfoRow(
+                "VID/PID",
+                "0x${"%04X".format(state.vendorId)} / 0x${"%04X".format(state.productId ?: 0)}"
+            )
             Spacer(Modifier.height(8.dp))
-            InfoRow("Schritt", "${state.step.ordinal + 1} – ${state.step.name}")
-            InfoRow("Modus", state.currentMode.name)
-            InfoRow("Gerät", state.deviceName ?: "—")
-            if (state.vendorId != null) InfoRow("VID/PID", "0x${"%04X".format(state.vendorId)} / 0x${"%04X".format(state.productId ?: 0)}")
-            Spacer(Modifier.height(6.dp))
-            Text(state.statusMessage, fontWeight = FontWeight.SemiBold)
+            Text(
+                state.statusMessage,
+                fontWeight = FontWeight.SemiBold,
+                color = FccColors.TextHigh,
+                fontSize = 14.sp
+            )
             if (!state.lastError.isNullOrBlank()) {
                 Spacer(Modifier.height(6.dp))
-                Text("Fehler: ${state.lastError}", color = Color(0xFFD32F2F))
+                Text(
+                    "⚠  ${state.lastError}",
+                    color = FccColors.Danger,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 12.sp
+                )
             }
         }
     }
@@ -239,18 +406,34 @@ private fun StatusCard(state: MainUiState) {
 
 @Composable
 private fun InfoRow(label: String, value: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
-        Text("$label:", modifier = Modifier.width(90.dp), color = Color(0xFF555555))
-        Text(value)
+    Row(Modifier.fillMaxWidth().padding(vertical = 3.dp)) {
+        Text(
+            label,
+            modifier = Modifier.width(72.dp),
+            color = FccColors.TextDim,
+            fontFamily = FontFamily.Monospace,
+            fontSize = 11.sp,
+            letterSpacing = 1.sp
+        )
+        Text(
+            value,
+            color = FccColors.TextHigh,
+            fontFamily = FontFamily.Monospace,
+            fontSize = 12.sp
+        )
     }
 }
 
 @Composable
 private fun ActionCard(state: MainUiState, vm: MainViewModel) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    HudPanel(modifier = Modifier.fillMaxWidth(), accent = FccColors.Magenta) {
         Column(Modifier.padding(16.dp)) {
-            Text("Nächster Schritt", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(8.dp))
+            Text(
+                "// NEXT ACTION",
+                style = MaterialTheme.typography.labelLarge,
+                color = FccColors.Magenta
+            )
+            Spacer(Modifier.height(10.dp))
             when (state.step) {
                 WizardStep.SCAN -> {
                     HelpText(
@@ -327,8 +510,8 @@ private fun SecondaryButton(text: String, busy: Boolean, onClick: () -> Unit) {
 
 @Composable
 private fun HelpText(text: String) {
-    Text(text, fontSize = 13.sp, color = Color(0xFF424242))
-    Spacer(Modifier.height(10.dp))
+    Text(text, fontSize = 13.sp, color = FccColors.TextMid, lineHeight = 18.sp)
+    Spacer(Modifier.height(12.dp))
 }
 
 @Composable
@@ -421,18 +604,21 @@ private fun BulletText(text: String) {
 
 @Composable
 private fun SafetyCard() {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0)),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            Text("⚖️  Rechtlicher Hinweis", fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(4.dp))
+    HudPanel(modifier = Modifier.fillMaxWidth(), accent = FccColors.Amber) {
+        Column(Modifier.padding(14.dp)) {
+            Text(
+                "// LEGAL NOTICE",
+                style = MaterialTheme.typography.labelLarge,
+                color = FccColors.Amber
+            )
+            Spacer(Modifier.height(6.dp))
             Text(
                 "Die FCC-Aktivierung ist außerhalb von FCC-Regionen (z. B. EU) " +
                     "rechtlich problematisch. Verwende diese App nur dort, wo es " +
                     "erlaubt ist. Es entsteht keinerlei Garantie- oder Haftungs­anspruch.",
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                color = FccColors.TextMid,
+                lineHeight = 17.sp
             )
         }
     }
@@ -545,28 +731,45 @@ private fun BuiltinConsentDialog(
 
 @Composable
 private fun LogsCard(logs: List<String>, onClear: () -> Unit) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp)) {
+    HudPanel(modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Logs", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(
+                    "// TELEMETRY LOG",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = FccColors.Cyan
+                )
                 Spacer(Modifier.weight(1f))
-                OutlinedButton(onClick = onClear, enabled = logs.isNotEmpty()) { Text("Leeren") }
+                OutlinedButton(
+                    onClick = onClear,
+                    enabled = logs.isNotEmpty()
+                ) { Text("CLEAR", fontSize = 11.sp, letterSpacing = 1.sp) }
             }
             Spacer(Modifier.height(8.dp))
-            if (logs.isEmpty()) {
-                Text("Noch keine Einträge.", color = Color(0xFF888888), fontSize = 12.sp)
-            } else {
-                LazyColumn(
-                    contentPadding = PaddingValues(vertical = 4.dp),
-                    modifier = Modifier.heightIn(max = 200.dp)
-                ) {
-                    items(logs) { line ->
-                        Text(
-                            text = line,
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily.Monospace,
-                            modifier = Modifier.padding(vertical = 1.dp)
-                        )
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF03070D))
+                    .border(1.dp, FccColors.SurfaceLine, RoundedCornerShape(8.dp))
+                    .padding(8.dp)
+            ) {
+                if (logs.isEmpty()) {
+                    Text("$ awaiting events…", color = FccColors.TextDim, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                } else {
+                    LazyColumn(
+                        contentPadding = PaddingValues(vertical = 2.dp),
+                        modifier = Modifier.heightIn(max = 200.dp)
+                    ) {
+                        items(logs) { line ->
+                            Text(
+                                text = "› $line",
+                                fontSize = 11.sp,
+                                color = FccColors.Lime,
+                                fontFamily = FontFamily.Monospace,
+                                modifier = Modifier.padding(vertical = 1.dp)
+                            )
+                        }
                     }
                 }
             }
