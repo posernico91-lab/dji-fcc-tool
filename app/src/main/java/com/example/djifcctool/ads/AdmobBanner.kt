@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,10 +14,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import kotlinx.coroutines.delay
 
 /**
  * Compose-Wrapper für ein adaptives AdMob-Banner.
- * Wird nur angezeigt, sobald [ConsentManager.canRequestAds] erfüllt ist.
+ * Wird angezeigt, sobald [ConsentManager.canRequestAds] erfüllt ist.
+ * Pollt periodisch, falls Consent erst nach erstem Compose erteilt wird.
  */
 @Composable
 fun AdmobBanner(modifier: Modifier = Modifier) {
@@ -25,12 +27,12 @@ fun AdmobBanner(modifier: Modifier = Modifier) {
     var canShow by remember { mutableStateOf(ConsentManager.canRequestAds(context)) }
 
     if (!canShow) {
-        // Re-evaluieren nach kurzem Delay, falls sich Consent während
-        // der Lebenszeit der Composable ändert.
-        DisposableEffect(Unit) {
-            val newValue = ConsentManager.canRequestAds(context)
-            if (newValue != canShow) canShow = newValue
-            onDispose { }
+        LaunchedEffect(Unit) {
+            // Periodisch prüfen, bis Consent verfügbar ist
+            while (!canShow) {
+                delay(1000)
+                if (ConsentManager.canRequestAds(context)) canShow = true
+            }
         }
         return
     }

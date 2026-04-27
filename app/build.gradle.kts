@@ -36,10 +36,21 @@ android {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // Echte Produktions-IDs (Fill nur, sobald App im AdMob-Konto registriert + freigeschaltet)
+            buildConfigField("String", "AD_APP_OPEN_ID",   "\"ca-app-pub-3778451046949775/3281764911\"")
+            buildConfigField("String", "AD_BANNER_ID",     "\"ca-app-pub-3778451046949775/1596403295\"")
+            buildConfigField("String", "AD_NATIVE_ID",     "\"ca-app-pub-3778451046949775/7778668269\"")
+            buildConfigField("String", "AD_INTERSTITIAL_ID","\"ca-app-pub-3778451046949775/4594846583\"")
         }
         debug {
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            // Offizielle Google-Test-Anzeigen-IDs: liefern IMMER eine Test-Anzeige
+            // Quelle: https://developers.google.com/admob/android/test-ads
+            buildConfigField("String", "AD_APP_OPEN_ID",   "\"ca-app-pub-3940256099942544/9257395921\"")
+            buildConfigField("String", "AD_BANNER_ID",     "\"ca-app-pub-3940256099942544/9214589741\"")
+            buildConfigField("String", "AD_NATIVE_ID",     "\"ca-app-pub-3940256099942544/2247696110\"")
+            buildConfigField("String", "AD_INTERSTITIAL_ID","\"ca-app-pub-3940256099942544/1033173712\"")
         }
     }
 

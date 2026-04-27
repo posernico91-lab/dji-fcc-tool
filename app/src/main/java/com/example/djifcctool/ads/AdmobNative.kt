@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,10 +16,12 @@ import com.example.djifcctool.R
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import kotlinx.coroutines.delay
 
 /**
  * Lädt + zeigt eine native AdMob-Anzeige (Erweiterte native Anzeige).
  * Verwendet die XML-Vorlage [R.layout.ad_native_advanced].
+ * Pollt periodisch auf Consent, falls dieser erst nach erstem Compose erteilt wird.
  */
 @Composable
 fun AdmobNative(modifier: Modifier = Modifier) {
@@ -26,11 +29,19 @@ fun AdmobNative(modifier: Modifier = Modifier) {
     var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
     var canShow by remember { mutableStateOf(ConsentManager.canRequestAds(context)) }
 
-    DisposableEffect(Unit) {
-        if (canShow) loadNativeAd(context) { ad ->
-            nativeAd?.destroy()
-            nativeAd = ad
+    LaunchedEffect(canShow) {
+        if (!canShow) {
+            while (!canShow) {
+                delay(1000)
+                if (ConsentManager.canRequestAds(context)) canShow = true
+            }
         }
+        if (canShow && nativeAd == null) {
+            loadNativeAd(context) { ad -> nativeAd = ad }
+        }
+    }
+
+    DisposableEffect(Unit) {
         onDispose { nativeAd?.destroy() }
     }
 
