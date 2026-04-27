@@ -54,8 +54,11 @@
     <string name="postpatch_step_5">Now plug the USB‑OTG cable into the UPPER USB‑C port of the controller.</string>
     <string name="postpatch_step_6">Open DJI Fly — it will reconnect automatically.</string>
 
-    <string name="check_title">Is FCC active? How to verify:</string>
-    <string name="check_1">DJI Fly → Settings → Transmission: »Frequency band« shows 2.4 + 5.8 GHz (CE = 2.4 only).</string>
+    <string name="check_title">Is FCC active? How to verify:</string>    <string name="mockup_title">// HOW TO RECOGNIZE FCC IN DJI FLY</string>
+    <string name="mockup_caption">DJI Fly → ⚙ Settings → Control → Frequency band</string>
+    <string name="mockup_band_label">Frequency band</string>
+    <string name="mockup_legend_fcc">FCC active – more range, 2.4 + 5.8 GHz</string>
+    <string name="mockup_legend_ce">CE active – limited, only 2.4 GHz</string>    <string name="check_1">DJI Fly → Settings → Transmission: »Frequency band« shows 2.4 + 5.8 GHz (CE = 2.4 only).</string>
     <string name="check_2">Range display in the camera view: FCC ≈ 10–15 km theory, CE ≈ 6 km.</string>
     <string name="check_3">Field test: stable link beyond ≈ 1.5 km outdoors = FCC is running.</string>
 

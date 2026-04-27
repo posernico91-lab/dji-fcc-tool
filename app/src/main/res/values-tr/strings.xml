@@ -48,6 +48,11 @@
     <string name="postpatch_step_6">DJI Fly\'ı aç — otomatik bağlanır.</string>
 
     <string name="check_title">FCC etkin mi? Nasıl kontrol edilir:</string>
+    <string name="mockup_title">// DJI FLY\'DA FCC NASIL ANLAŞILIR</string>
+    <string name="mockup_caption">DJI Fly → ⚙ Ayarlar → Kumanda → Frekans bandı</string>
+    <string name="mockup_band_label">Frekans bandı</string>
+    <string name="mockup_legend_fcc">FCC etkin – daha fazla menzil, 2,4 + 5,8 GHz</string>
+    <string name="mockup_legend_ce">CE etkin – sınırlı, yalnızca 2,4 GHz</string>
     <string name="check_1">DJI Fly → Ayarlar → İletim: »Frekans bandı« 2.4 + 5.8 GHz gösterir (CE = sadece 2.4).</string>
     <string name="check_2">Kameradaki menzil göstergesi: FCC ≈ 10–15 km teorik, CE ≈ 6 km.</string>
     <string name="check_3">Saha testi: açık alanda ~1,5 km üzeri stabil bağlantı = FCC çalışıyor.</string>

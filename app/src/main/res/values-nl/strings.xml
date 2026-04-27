@@ -48,6 +48,11 @@
     <string name="postpatch_step_6">Open DJI Fly — verbindt automatisch.</string>
 
     <string name="check_title">FCC actief? Zo controleer je het:</string>
+    <string name="mockup_title">// FCC HERKENNEN IN DJI FLY</string>
+    <string name="mockup_caption">DJI Fly → ⚙ Instellingen → Bediening → Frequentieband</string>
+    <string name="mockup_band_label">Frequentieband</string>
+    <string name="mockup_legend_fcc">FCC actief – meer bereik, 2,4 + 5,8 GHz</string>
+    <string name="mockup_legend_ce">CE actief – beperkt, alleen 2,4 GHz</string>
     <string name="check_1">DJI Fly → Instellingen → Transmissie: »Frequentieband« toont 2.4 + 5.8 GHz (CE = alleen 2.4).</string>
     <string name="check_2">Bereikindicator in beeld: FCC ≈ 10–15 km in theorie, CE ≈ 6 km.</string>
     <string name="check_3">Praktijktest: stabiele verbinding boven ~1,5 km buiten = FCC werkt.</string>

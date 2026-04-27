@@ -514,6 +514,9 @@ private fun PostPatchInstructions(onDisconnect: () -> Unit) {
             BulletText(stringResource(R.string.check_2))
             BulletText(stringResource(R.string.check_3))
 
+            Spacer(Modifier.height(14.dp))
+            DjiFlyMockup()
+
             Spacer(Modifier.height(12.dp))
             Text(stringResource(R.string.breaks_title), fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
@@ -548,6 +551,136 @@ private fun BulletText(text: String) {
     Row(Modifier.padding(vertical = 2.dp)) {
         Text("•  ", fontSize = 13.sp, color = Color(0xFF1B5E20))
         Text(text, fontSize = 13.sp, color = Color(0xFF1B5E20))
+    }
+}
+
+@Composable
+private fun DjiFlyMockup() {
+    Column(Modifier.fillMaxWidth()) {
+        Text(
+            stringResource(R.string.mockup_title),
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+            color = Color(0xFF1B5E20)
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            stringResource(R.string.mockup_caption),
+            fontSize = 11.sp,
+            color = Color(0xFF424242)
+        )
+        Spacer(Modifier.height(10.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            FlyPhoneMockup(
+                isFcc = true,
+                modifier = Modifier.weight(1f)
+            )
+            FlyPhoneMockup(
+                isFcc = false,
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                Modifier
+                    .size(10.dp)
+                    .background(Color(0xFF00C853), shape = CircleShape)
+            )
+            Spacer(Modifier.width(6.dp))
+            Text(
+                stringResource(R.string.mockup_legend_fcc),
+                fontSize = 11.sp,
+                color = Color(0xFF1B5E20),
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                Modifier
+                    .size(10.dp)
+                    .background(Color(0xFFB71C1C), shape = CircleShape)
+            )
+            Spacer(Modifier.width(6.dp))
+            Text(
+                stringResource(R.string.mockup_legend_ce),
+                fontSize = 11.sp,
+                color = Color(0xFF424242)
+            )
+        }
+    }
+}
+
+@Composable
+private fun FlyPhoneMockup(isFcc: Boolean, modifier: Modifier = Modifier) {
+    val accent = if (isFcc) Color(0xFF00C853) else Color(0xFFB71C1C)
+    val badge = if (isFcc) "FCC" else "CE"
+    val band = if (isFcc) "2.4 + 5.8 GHz" else "2.4 GHz"
+    val distance = if (isFcc) "~12 km" else "~6 km"
+    Column(
+        modifier
+            .background(Color(0xFF101418), shape = RoundedCornerShape(14.dp))
+            .border(2.dp, accent, shape = RoundedCornerShape(14.dp))
+            .padding(8.dp)
+    ) {
+        // Top bar
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("DJI Fly", color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+            Box(
+                Modifier
+                    .background(accent, shape = RoundedCornerShape(4.dp))
+                    .padding(horizontal = 5.dp, vertical = 1.dp)
+            ) {
+                Text(badge, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+        Spacer(Modifier.height(6.dp))
+        // Settings row (highlighted)
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF1C1F24), shape = RoundedCornerShape(6.dp))
+                .padding(6.dp)
+        ) {
+            Text(
+                stringResource(R.string.mockup_band_label),
+                color = Color(0xFFB0BEC5),
+                fontSize = 9.sp
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(band, color = accent, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        }
+        Spacer(Modifier.height(6.dp))
+        // Distance HUD
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("D", color = Color(0xFF607D8B), fontSize = 9.sp, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.width(4.dp))
+            Text(distance, color = accent, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+        }
+        Spacer(Modifier.height(4.dp))
+        // Signal bars
+        Row(verticalAlignment = Alignment.Bottom) {
+            val bars = if (isFcc) 5 else 2
+            for (i in 1..5) {
+                Box(
+                    Modifier
+                        .padding(end = 1.dp)
+                        .width(4.dp)
+                        .height((4 + i * 2).dp)
+                        .background(
+                            if (i <= bars) accent else Color(0xFF37474F),
+                            shape = RoundedCornerShape(1.dp)
+                        )
+                )
+            }
+        }
     }
 }
 

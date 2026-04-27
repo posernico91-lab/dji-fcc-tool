@@ -48,6 +48,11 @@
     <string name="postpatch_step_6">Откройте DJI Fly — он подключится автоматически.</string>
 
     <string name="check_title">FCC активен? Как проверить:</string>
+    <string name="mockup_title">// КАК РАСПОЗНАТЬ FCC В DJI FLY</string>
+    <string name="mockup_caption">DJI Fly → ⚙ Настройки → Управление → Диапазон частот</string>
+    <string name="mockup_band_label">Диапазон частот</string>
+    <string name="mockup_legend_fcc">FCC активен – больше дальности, 2,4 + 5,8 ГГц</string>
+    <string name="mockup_legend_ce">CE активен – ограничено, только 2,4 ГГц</string>
     <string name="check_1">DJI Fly → Настройки → Передача: «Полоса частот» показывает 2.4 + 5.8 ГГц (CE = только 2.4).</string>
     <string name="check_2">Индикатор дальности в камере: FCC ≈ 10–15 км теоретически, CE ≈ 6 км.</string>
     <string name="check_3">Полевой тест: стабильная связь дальше ~1,5 км на открытом месте = FCC работает.</string>

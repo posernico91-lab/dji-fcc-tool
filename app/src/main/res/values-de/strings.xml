@@ -48,6 +48,11 @@
     <string name="postpatch_step_6">DJI Fly öffnen — verbindet sich automatisch.</string>
 
     <string name="check_title">FCC aktiv? So prüfst du es:</string>
+    <string name="mockup_title">// SO ERKENNST DU FCC IN DJI FLY</string>
+    <string name="mockup_caption">DJI Fly → ⚙ Einstellungen → Steuerung → Frequenzband</string>
+    <string name="mockup_band_label">Frequenzband</string>
+    <string name="mockup_legend_fcc">FCC aktiv – mehr Reichweite, 2,4 + 5,8 GHz</string>
+    <string name="mockup_legend_ce">CE aktiv – begrenzt, nur 2,4 GHz</string>
     <string name="check_1">DJI Fly → Einstellungen → Übertragung: »Frequenzband« zeigt 2.4 + 5.8 GHz (CE = nur 2.4).</string>
     <string name="check_2">Reichweiten-Anzeige im Kamera-Bild: FCC ≈ 10–15 km Theorie, CE ≈ 6 km.</string>
     <string name="check_3">Praxistest: über ~1,5 km Verbindung im Freien = FCC läuft.</string>

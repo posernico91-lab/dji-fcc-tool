@@ -48,6 +48,11 @@
     <string name="postpatch_step_6">打开 DJI Fly — 会自动重新连接。</string>
 
     <string name="check_title">FCC 是否激活？如何验证：</string>
+    <string name="mockup_title">// 如何在 DJI FLY 中识别 FCC</string>
+    <string name="mockup_caption">DJI Fly → ⚙ 设置 → 遥控器 → 频段</string>
+    <string name="mockup_band_label">频段</string>
+    <string name="mockup_legend_fcc">FCC 已激活 – 更远距离，2.4 + 5.8 GHz</string>
+    <string name="mockup_legend_ce">CE 已激活 – 受限，仅 2.4 GHz</string>
     <string name="check_1">DJI Fly → 设置 → 图传：「频段」显示 2.4 + 5.8 GHz（CE = 仅 2.4）。</string>
     <string name="check_2">相机视图中的距离指示：FCC ≈ 10–15 km 理论值，CE ≈ 6 km。</string>
     <string name="check_3">实地测试：在空旷场地连接稳定超过约 1.5 km = FCC 已工作。</string>
