@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FCC Switch</string>
-    <string name="app_tagline">DJI Mini menzil kilit açıcı</string>
-    <string name="developer_credit">Poser.py tarafından geliştirildi</string>
+    <string name="app_tagline">DJI Mini Menzil Açıcı</string>
+    <string name="developer_credit">Geliştiren: Poser.py</string>
+    <string name="hud_console_label">• FCC YAMA KONSOLU •</string>
+
+    <string name="safe_mode_title">GÜVENLİ MOD • KURU ÇALIŞMA</string>
+    <string name="safe_mode_body">Donanıma hiçbir bayt gönderilmez. Uygulama sadece hangi paketleri göndereceğini günlüğe yazar.</string>
+
+    <string name="status_header">// SİSTEM DURUMU</string>
+    <string name="label_step">ADIM</string>
+    <string name="label_mode">MOD</string>
+    <string name="label_device">CİHAZ</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// SONRAKİ EYLEM</string>
+
+    <string name="scan_help">Nasıl başlanır:\n1. DJI Fly uygulamasını kapat (son uygulamalardan kaydır).\n2. Kumandayı aç.\n3. USB-OTG kablosunu kumandanın ALT USB-C portuna, diğer ucu telefona tak.\n4. Android sorarsa: »FCC Switch« seç.\n5. »Kumandayı ara«ya dokun.</string>
+    <string name="connect_help">Sistem iletişim kutusunda USB erişimine izin ver (»Her zaman kullan« işaretle, böylece kutu tekrar görünmez).\nKutu yok mu? → »Bağlan«a tekrar dokun.</string>
+    <string name="detect_help">Bağlantı kuruldu. FCC yamasını hazırlamak için »Devam«a dokun.</string>
+    <string name="patch_help">FCC etkinleştirildiğinde olanlar:\n• 2 paket (37 bayt) kumandaya gider → telsiz çipi FCC\'ye geçer.\n• Daha fazla güç, daha fazla menzil, 2.4 + 5.8 GHz.\n• Drone aynen kalır.\n\nÖNEMLİ: Yamadan hemen sonra kumandayı kapatıp tekrar açmak ZORUNLU, yoksa FCC etkinleşmez.</string>
+
+    <string name="btn_scan_controller">Kumandayı ara</string>
+    <string name="btn_connect">Bağlan</string>
+    <string name="btn_next_to_patch">FCC yamasına devam</string>
+    <string name="btn_disconnect">Bağlantıyı kes</string>
+    <string name="btn_apply_fcc">FCC\'yi etkinleştir</string>
+    <string name="btn_reset_ce">CE\'ye sıfırla</string>
+    <string name="btn_done">Bitti — bağlantıyı kes</string>
+    <string name="btn_cancel">İptal</string>
+
+    <string name="confirm_title">FCC yaması şimdi gönderilsin mi?</string>
+    <string name="confirm_body">Kumandaya 2 paket (37 bayt) gönderilir ve telsiz modu FCC\'ye geçer.</string>
+    <string name="confirm_b1">• Sadece kumanda değişir, drone değil.</string>
+    <string name="confirm_b2">• Sonrasında kumandayı kapatıp tekrar açmak ZORUNLU.</string>
+    <string name="confirm_b3">• FCC bölgeleri dışında yasal olarak sorun yaratabilir.</string>
+    <string name="btn_confirm_send">Evet, FCC gönder</string>
+
+    <string name="postpatch_header">✅ FCC yaması gönderildi — şimdi kumandayı yeniden başlat!</string>
+    <string name="postpatch_intro">Tam olarak bu sırayla yap:</string>
+    <string name="postpatch_step_1">USB kablosunu kumandadan çıkar.</string>
+    <string name="postpatch_step_2">Kumandayı KAPAT ve tekrar AÇ (tüm LED\'ler sönene kadar güç tuşuna uzun bas — sonra açmak için tekrar uzun bas).\n⚠ Zorunlu: Bu yeniden başlatma olmadan FCC etkinleşmez.\n⚠ Drone\'u KAPATMA — yoksa yamayı tekrarlaman gerekir.</string>
+    <string name="postpatch_step_3">Kumanda tamamen açılana kadar bekle (durum LED\'leri sürekli yansın).</string>
+    <string name="postpatch_step_4">Drone\'u aç ve bağlantıyı bekle (bip sesi / sürekli LED).</string>
+    <string name="postpatch_step_5">Şimdi USB-OTG kablosunu kumandanın ÜST USB-C portuna tak.</string>
+    <string name="postpatch_step_6">DJI Fly\'ı aç — otomatik bağlanır.</string>
+
+    <string name="check_title">FCC etkin mi? Nasıl kontrol edilir:</string>
+    <string name="check_1">DJI Fly → Ayarlar → İletim: »Frekans bandı« 2.4 + 5.8 GHz gösterir (CE = sadece 2.4).</string>
+    <string name="check_2">Kameradaki menzil göstergesi: FCC ≈ 10–15 km teorik, CE ≈ 6 km.</string>
+    <string name="check_3">Saha testi: açık alanda ~1,5 km üzeri stabil bağlantı = FCC çalışıyor.</string>
+
+    <string name="breaks_title">FCC\'yi ne bozar?</string>
+    <string name="breaks_1">Kumandayı kapatmak → CE\'ye döner → yamayı tekrar uygula.</string>
+    <string name="breaks_2">Kumanda firmware güncellemesi yamayı kaldırabilir.</string>
+    <string name="breaks_3">Sadece drone\'u kapatmak BOZMAZ — kumanda açık kaldığı sürece.</string>
+
+    <string name="safety_header">// YASAL UYARI</string>
+    <string name="safety_body">FCC bölgeleri dışında (örn. AB) FCC\'yi etkinleştirmek yasal olarak sorunlu olabilir. Bu uygulamayı yalnızca izin verilen yerlerde kullan. Hiçbir garanti veya sorumluluk üstlenilmez.</string>
+
+    <string name="logs_header">// TELEMETRİ GÜNLÜĞÜ</string>
+    <string name="logs_clear">TEMİZLE</string>
+    <string name="logs_empty">$ olaylar bekleniyor…</string>
+
+    <string name="privacy_options">Gizlilik ve reklam</string>
+    <string name="privacy_reset_debug">🔧 Onayı sıfırla (debug)</string>
+    <string name="consent_title">Gizlilik ve reklam</string>
+    <string name="consent_body">Bu uygulama ücretsizdir ve reklamlarla finanse edilir (Google AdMob).\n\nReklamları nasıl gösterebileceğimizi seç:</string>
+    <string name="consent_choices">• Kişiselleştirilmiş: ilgi alanına uygun reklamlar (cookies/ID).\n• Kişiselleştirilmemiş: genel reklamlar, profil çıkarmadan.\n• Reddet: reklam yok, uygulama çalışmaya devam eder.\n\nSeçimini istediğin zaman »Gizlilik ve reklam« üzerinden değiştirebilirsin.</string>
+    <string name="consent_current">Mevcut seçim: %1$s</string>
+    <string name="consent_choice_personalized">Kişiselleştirilmiş</string>
+    <string name="consent_choice_npa">Kişiselleştirilmemiş</string>
+    <string name="consent_choice_reject">Reddet</string>
+
     <string name="connect">USB tara</string>
     <string name="status_check">Durumu kontrol et</string>
-    <string name="force_fcc">FCC etkinleştir</string>
+    <string name="force_fcc">FCC\'yi etkinleştir</string>
     <string name="reset_ce">Sıfırla / CE</string>
     <string name="disconnect">Bağlantıyı kes</string>
-    <string name="privacy_options">Gizlilik ayarları</string>
 </resources>

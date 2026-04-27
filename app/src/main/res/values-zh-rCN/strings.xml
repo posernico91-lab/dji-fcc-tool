@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FCC Switch</string>
-    <string name="app_tagline">DJI Mini 距离解锁器</string>
+    <string name="app_tagline">DJI Mini 信号距离解锁</string>
     <string name="developer_credit">由 Poser.py 开发</string>
+    <string name="hud_console_label">• FCC 补丁控制台 •</string>
+
+    <string name="safe_mode_title">安全模式 • 空跑</string>
+    <string name="safe_mode_body">不会向硬件发送任何字节。应用只记录将要发送哪些数据包。</string>
+
+    <string name="status_header">// 系统状态</string>
+    <string name="label_step">步骤</string>
+    <string name="label_mode">模式</string>
+    <string name="label_device">设备</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// 下一步操作</string>
+
+    <string name="scan_help">如何开始：\n1. 关闭 DJI Fly 应用（从最近任务中划掉）。\n2. 打开遥控器。\n3. 用 USB-OTG 线连接遥控器的下方 USB-C 口，另一端插入手机。\n4. 如果安卓询问：选择「FCC Switch」。\n5. 点击「搜索遥控器」。</string>
+    <string name="connect_help">在系统对话框中允许 USB 访问（勾选「始终使用」，下次不会再弹出）。\n没有对话框？→ 再次点击「连接」。</string>
+    <string name="detect_help">连接已建立。点击「下一步」准备 FCC 补丁。</string>
+    <string name="patch_help">激活 FCC 时会发生什么：\n• 2 个数据包（37 字节）发送到遥控器 → 射频芯片切换到 FCC。\n• 更高发射功率，更远距离，2.4 + 5.8 GHz。\n• 飞机本体不变。\n\n重要：补丁完成后，必须将遥控器关闭再开启一次，否则 FCC 不会生效。</string>
+
+    <string name="btn_scan_controller">搜索遥控器</string>
+    <string name="btn_connect">连接</string>
+    <string name="btn_next_to_patch">前往 FCC 补丁</string>
+    <string name="btn_disconnect">断开</string>
+    <string name="btn_apply_fcc">激活 FCC</string>
+    <string name="btn_reset_ce">重置为 CE</string>
+    <string name="btn_done">完成 — 断开</string>
+    <string name="btn_cancel">取消</string>
+
+    <string name="confirm_title">现在发送 FCC 补丁？</string>
+    <string name="confirm_body">将向遥控器发送 2 个数据包（37 字节），将射频模式切换到 FCC。</string>
+    <string name="confirm_b1">• 仅修改遥控器，不修改飞机。</string>
+    <string name="confirm_b2">• 之后必须将遥控器关闭再开启 — 必需操作。</string>
+    <string name="confirm_b3">• 在 CE 区域使用可能存在法律风险。</string>
+    <string name="btn_confirm_send">是，发送 FCC</string>
+
+    <string name="postpatch_header">✅ FCC 补丁已发送 — 现在重启遥控器！</string>
+    <string name="postpatch_intro">请严格按此顺序操作：</string>
+    <string name="postpatch_step_1">从遥控器拔下 USB 线。</string>
+    <string name="postpatch_step_2">关闭并重新打开遥控器（长按电源键直到所有 LED 熄灭 — 然后再次长按开机）。\n⚠ 必需：未重启 FCC 不会生效。\n⚠ 不要关闭飞机 — 否则需要重新打补丁。</string>
+    <string name="postpatch_step_3">等待遥控器完全启动（状态 LED 常亮）。</string>
+    <string name="postpatch_step_4">打开飞机并等待连接（蜂鸣 / 常亮 LED）。</string>
+    <string name="postpatch_step_5">现在将 USB-OTG 线插入遥控器的上方 USB-C 口。</string>
+    <string name="postpatch_step_6">打开 DJI Fly — 会自动重新连接。</string>
+
+    <string name="check_title">FCC 是否激活？如何验证：</string>
+    <string name="check_1">DJI Fly → 设置 → 图传：「频段」显示 2.4 + 5.8 GHz（CE = 仅 2.4）。</string>
+    <string name="check_2">相机视图中的距离指示：FCC ≈ 10–15 km 理论值，CE ≈ 6 km。</string>
+    <string name="check_3">实地测试：在空旷场地连接稳定超过约 1.5 km = FCC 已工作。</string>
+
+    <string name="breaks_title">什么会破坏 FCC？</string>
+    <string name="breaks_1">关闭遥控器 → 回到 CE → 需要重新应用补丁。</string>
+    <string name="breaks_2">遥控器固件更新可能会移除补丁。</string>
+    <string name="breaks_3">仅关闭飞机不会破坏 — 只要遥控器保持开启。</string>
+
+    <string name="safety_header">// 法律提示</string>
+    <string name="safety_body">在 FCC 区域以外（例如欧盟）激活 FCC 可能存在法律问题。仅在允许的地区使用本应用。不提供任何保证或担保责任。</string>
+
+    <string name="logs_header">// 遥测日志</string>
+    <string name="logs_clear">清除</string>
+    <string name="logs_empty">$ 等待事件…</string>
+
+    <string name="privacy_options">隐私与广告</string>
+    <string name="privacy_reset_debug">🔧 重置同意（调试）</string>
+    <string name="consent_title">隐私与广告</string>
+    <string name="consent_body">本应用免费，由广告（Google AdMob）支持。\n\n请选择我们如何展示广告：</string>
+    <string name="consent_choices">• 个性化：根据你的兴趣展示广告（cookies/ID）。\n• 非个性化：通用广告，不构建画像。\n• 拒绝：不显示广告，应用照常运行。\n\n你可以随时通过「隐私与广告」更改选择。</string>
+    <string name="consent_current">当前选择：%1$s</string>
+    <string name="consent_choice_personalized">个性化</string>
+    <string name="consent_choice_npa">非个性化</string>
+    <string name="consent_choice_reject">拒绝</string>
+
     <string name="connect">扫描 USB</string>
     <string name="status_check">检查状态</string>
-    <string name="force_fcc">启用 FCC</string>
+    <string name="force_fcc">激活 FCC</string>
     <string name="reset_ce">重置 / CE</string>
-    <string name="disconnect">断开连接</string>
-    <string name="privacy_options">隐私设置</string>
+    <string name="disconnect">断开</string>
 </resources>

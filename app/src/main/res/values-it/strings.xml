@@ -3,10 +3,80 @@
     <string name="app_name">FCC Switch</string>
     <string name="app_tagline">Sblocco portata DJI Mini</string>
     <string name="developer_credit">Sviluppato da Poser.py</string>
+    <string name="hud_console_label">• CONSOLE PATCH FCC •</string>
+
+    <string name="safe_mode_title">MODALITÀ SICURA • SIMULAZIONE</string>
+    <string name="safe_mode_body">Nessun byte viene inviato all\'hardware. L\'app registra solo i pacchetti che invierebbe.</string>
+
+    <string name="status_header">// STATO SISTEMA</string>
+    <string name="label_step">PASSO</string>
+    <string name="label_mode">MODO</string>
+    <string name="label_device">DISPOSITIVO</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// PROSSIMA AZIONE</string>
+
+    <string name="scan_help">Come iniziare:\n1. Chiudi l\'app DJI Fly (scorrila via dai recenti).\n2. Accendi il radiocomando.\n3. Collega il cavo USB-OTG alla porta USB-C INFERIORE del radiocomando, l\'altra estremità al telefono.\n4. Se Android chiede: scegli «FCC Switch».\n5. Tocca «Cerca radiocomando».</string>
+    <string name="connect_help">Concedi l\'accesso USB nella finestra di sistema (spunta «Usa sempre» così non comparirà più).\nNessuna finestra? → Tocca di nuovo «Connetti».</string>
+    <string name="detect_help">Connessione stabilita. Tocca «Continua» per preparare il patch FCC.</string>
+    <string name="patch_help">Cosa succede attivando FCC:\n• 2 pacchetti (37 byte) vanno al radiocomando → il chip radio passa a FCC.\n• Più potenza, più portata, 2.4 + 5.8 GHz.\n• Il drone resta intatto.\n\nIMPORTANTE: subito dopo il patch DEVI spegnere e riaccendere il radiocomando, altrimenti FCC non si attiverà.</string>
+
+    <string name="btn_scan_controller">Cerca radiocomando</string>
+    <string name="btn_connect">Connetti</string>
+    <string name="btn_next_to_patch">Continua al patch FCC</string>
+    <string name="btn_disconnect">Disconnetti</string>
+    <string name="btn_apply_fcc">Attiva FCC</string>
+    <string name="btn_reset_ce">Ripristina CE</string>
+    <string name="btn_done">Fatto — disconnetti</string>
+    <string name="btn_cancel">Annulla</string>
+
+    <string name="confirm_title">Inviare ora il patch FCC?</string>
+    <string name="confirm_body">Vengono inviati 2 pacchetti (37 byte) al radiocomando che impostano la modalità radio su FCC.</string>
+    <string name="confirm_b1">• Solo il radiocomando viene modificato, non il drone.</string>
+    <string name="confirm_b2">• Dopo DEVI spegnere e riaccendere il radiocomando — obbligatorio.</string>
+    <string name="confirm_b3">• Fuori dalle regioni FCC può essere problematico legalmente.</string>
+    <string name="btn_confirm_send">Sì, invia FCC</string>
+
+    <string name="postpatch_header">✅ Patch FCC inviato — ora riavvia il radiocomando!</string>
+    <string name="postpatch_intro">Esegui esattamente in questo ordine:</string>
+    <string name="postpatch_step_1">Scollega il cavo USB dal radiocomando.</string>
+    <string name="postpatch_step_2">SPEGNI e RIACCENDI il radiocomando (pressione lunga sul tasto power finché tutti i LED si spengono — poi nuova pressione lunga per accendere).\n⚠ Obbligatorio: senza questo riavvio FCC non si attiverà.\n⚠ NON spegnere il drone — altrimenti il patch va ripetuto.</string>
+    <string name="postpatch_step_3">Attendi che il radiocomando finisca di avviarsi (LED di stato fissi).</string>
+    <string name="postpatch_step_4">Accendi il drone e attendi il collegamento (beep / LED fisso).</string>
+    <string name="postpatch_step_5">Collega ora il cavo USB-OTG alla porta USB-C SUPERIORE del radiocomando.</string>
+    <string name="postpatch_step_6">Apri DJI Fly — si riconnette automaticamente.</string>
+
+    <string name="check_title">FCC attivo? Come verificarlo:</string>
+    <string name="check_1">DJI Fly → Impostazioni → Trasmissione: «Banda di frequenza» mostra 2.4 + 5.8 GHz (CE = solo 2.4).</string>
+    <string name="check_2">Indicatore di portata nella vista camera: FCC ≈ 10–15 km in teoria, CE ≈ 6 km.</string>
+    <string name="check_3">Test pratico: collegamento stabile oltre ~1,5 km all\'aperto = FCC attivo.</string>
+
+    <string name="breaks_title">Cosa rompe FCC?</string>
+    <string name="breaks_1">Spegnere il radiocomando → torna a CE → riapplica il patch.</string>
+    <string name="breaks_2">Un aggiornamento firmware del radiocomando può rimuovere il patch.</string>
+    <string name="breaks_3">Spegnere solo il drone NON lo rompe — finché il radiocomando resta acceso.</string>
+
+    <string name="safety_header">// AVVISO LEGALE</string>
+    <string name="safety_body">Attivare FCC fuori dalle regioni FCC (es. UE) può essere problematico legalmente. Usa questa app solo dove consentito. Nessuna garanzia, nessuna responsabilità.</string>
+
+    <string name="logs_header">// LOG TELEMETRIA</string>
+    <string name="logs_clear">PULISCI</string>
+    <string name="logs_empty">$ in attesa di eventi…</string>
+
+    <string name="privacy_options">Privacy e annunci</string>
+    <string name="privacy_reset_debug">🔧 Ripristina consenso (debug)</string>
+    <string name="consent_title">Privacy e annunci</string>
+    <string name="consent_body">Questa app è gratuita e finanziata dagli annunci (Google AdMob).\n\nScegli come possiamo mostrarti gli annunci:</string>
+    <string name="consent_choices">• Personalizzati: annunci in base ai tuoi interessi (cookie/ID).\n• Non personalizzati: annunci generici, senza profilazione.\n• Rifiuta: nessun annuncio, l\'app continua a funzionare.\n\nPuoi cambiarlo in qualsiasi momento da «Privacy e annunci».</string>
+    <string name="consent_current">Scelta attuale: %1$s</string>
+    <string name="consent_choice_personalized">Personalizzati</string>
+    <string name="consent_choice_npa">Non personalizzati</string>
+    <string name="consent_choice_reject">Rifiuta</string>
+
     <string name="connect">Scansiona USB</string>
     <string name="status_check">Controlla stato</string>
     <string name="force_fcc">Attiva FCC</string>
     <string name="reset_ce">Ripristina / CE</string>
     <string name="disconnect">Disconnetti</string>
-    <string name="privacy_options">Impostazioni privacy</string>
 </resources>

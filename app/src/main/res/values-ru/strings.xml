@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FCC Switch</string>
-    <string name="app_tagline">Разблокировщик дальности DJI Mini</string>
+    <string name="app_tagline">Разблокировка дальности DJI Mini</string>
     <string name="developer_credit">Разработано Poser.py</string>
+    <string name="hud_console_label">• КОНСОЛЬ ПАТЧА FCC •</string>
+
+    <string name="safe_mode_title">БЕЗОПАСНЫЙ РЕЖИМ • СУХОЙ ПРОГОН</string>
+    <string name="safe_mode_body">Никакие байты не отправляются в железо. Приложение только пишет в лог, какие пакеты отправило бы.</string>
+
+    <string name="status_header">// СОСТОЯНИЕ СИСТЕМЫ</string>
+    <string name="label_step">ШАГ</string>
+    <string name="label_mode">РЕЖИМ</string>
+    <string name="label_device">УСТРОЙСТВО</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// СЛЕДУЮЩЕЕ ДЕЙСТВИЕ</string>
+
+    <string name="scan_help">С чего начать:\n1. Закройте приложение DJI Fly (смахните из недавних).\n2. Включите пульт.\n3. Подключите USB-OTG-кабель в НИЖНИЙ USB-C-порт пульта, другой конец в телефон.\n4. Если Android спросит — выберите «FCC Switch».\n5. Нажмите «Найти пульт».</string>
+    <string name="connect_help">Разрешите доступ USB в системном диалоге (поставьте «Всегда» — диалог больше не будет появляться).\nНет диалога? → Нажмите «Подключить» ещё раз.</string>
+    <string name="detect_help">Соединение есть. Нажмите «Далее», чтобы подготовить FCC-патч.</string>
+    <string name="patch_help">Что происходит при включении FCC:\n• 2 пакета (37 байт) идут на пульт → радиочип переключается на FCC.\n• Больше мощности, дальше связь, 2.4 + 5.8 ГГц.\n• Сам дрон не меняется.\n\nВАЖНО: Сразу после патча НУЖНО выключить и снова включить пульт, иначе FCC не активируется.</string>
+
+    <string name="btn_scan_controller">Найти пульт</string>
+    <string name="btn_connect">Подключить</string>
+    <string name="btn_next_to_patch">Перейти к FCC-патчу</string>
+    <string name="btn_disconnect">Отключить</string>
+    <string name="btn_apply_fcc">Включить FCC</string>
+    <string name="btn_reset_ce">Вернуть на CE</string>
+    <string name="btn_done">Готово — отключить</string>
+    <string name="btn_cancel">Отмена</string>
+
+    <string name="confirm_title">Отправить FCC-патч сейчас?</string>
+    <string name="confirm_body">2 пакета (37 байт) уйдут на пульт и переключат радиорежим на FCC.</string>
+    <string name="confirm_b1">• Меняется только пульт, не дрон.</string>
+    <string name="confirm_b2">• После этого нужно ОБЯЗАТЕЛЬНО выключить и включить пульт.</string>
+    <string name="confirm_b3">• Вне зон FCC это может быть юридически проблемно.</string>
+    <string name="btn_confirm_send">Да, отправить FCC</string>
+
+    <string name="postpatch_header">✅ Патч FCC отправлен — теперь перезагрузите пульт!</string>
+    <string name="postpatch_intro">Чётко по этому порядку:</string>
+    <string name="postpatch_step_1">Отключите USB-кабель от пульта.</string>
+    <string name="postpatch_step_2">ВЫКЛЮЧИТЕ и снова ВКЛЮЧИТЕ пульт (долгое нажатие на питание, пока все LED не погаснут — затем снова долгое нажатие, чтобы включить).\n⚠ Обязательно: без перезагрузки FCC не включится.\n⚠ НЕ выключайте дрон — иначе придётся повторять патч.</string>
+    <string name="postpatch_step_3">Дождитесь полной загрузки пульта (статус-LED горят постоянно).</string>
+    <string name="postpatch_step_4">Включите дрон и дождитесь связи (бип / постоянный LED).</string>
+    <string name="postpatch_step_5">Теперь подключите USB-OTG-кабель в ВЕРХНИЙ USB-C-порт пульта.</string>
+    <string name="postpatch_step_6">Откройте DJI Fly — он подключится автоматически.</string>
+
+    <string name="check_title">FCC активен? Как проверить:</string>
+    <string name="check_1">DJI Fly → Настройки → Передача: «Полоса частот» показывает 2.4 + 5.8 ГГц (CE = только 2.4).</string>
+    <string name="check_2">Индикатор дальности в камере: FCC ≈ 10–15 км теоретически, CE ≈ 6 км.</string>
+    <string name="check_3">Полевой тест: стабильная связь дальше ~1,5 км на открытом месте = FCC работает.</string>
+
+    <string name="breaks_title">Что ломает FCC?</string>
+    <string name="breaks_1">Выключение пульта → возврат к CE → нужно заново применить патч.</string>
+    <string name="breaks_2">Обновление прошивки пульта может удалить патч.</string>
+    <string name="breaks_3">Выключение только дрона НЕ ломает — пока пульт включён.</string>
+
+    <string name="safety_header">// ЮРИДИЧЕСКОЕ УВЕДОМЛЕНИЕ</string>
+    <string name="safety_body">Включение FCC вне зон FCC (например, ЕС) может быть юридически проблемным. Используйте приложение только там, где это разрешено. Без гарантий и ответственности.</string>
+
+    <string name="logs_header">// ЛОГ ТЕЛЕМЕТРИИ</string>
+    <string name="logs_clear">ОЧИСТИТЬ</string>
+    <string name="logs_empty">$ ожидание событий…</string>
+
+    <string name="privacy_options">Конфиденциальность и реклама</string>
+    <string name="privacy_reset_debug">🔧 Сбросить согласие (debug)</string>
+    <string name="consent_title">Конфиденциальность и реклама</string>
+    <string name="consent_body">Это бесплатное приложение, финансируемое рекламой (Google AdMob).\n\nВыберите, как мы можем показывать рекламу:</string>
+    <string name="consent_choices">• Персонализированная: реклама по вашим интересам (cookies/ID).\n• Без персонализации: общая реклама, без профилирования.\n• Отказаться: без рекламы, приложение продолжит работать.\n\nВы можете изменить выбор в любой момент в «Конфиденциальность и реклама».</string>
+    <string name="consent_current">Текущий выбор: %1$s</string>
+    <string name="consent_choice_personalized">Персонализированная</string>
+    <string name="consent_choice_npa">Без персонализации</string>
+    <string name="consent_choice_reject">Отказаться</string>
+
     <string name="connect">Сканировать USB</string>
     <string name="status_check">Проверить статус</string>
     <string name="force_fcc">Включить FCC</string>
     <string name="reset_ce">Сброс / CE</string>
     <string name="disconnect">Отключить</string>
-    <string name="privacy_options">Настройки конфиденциальности</string>
 </resources>

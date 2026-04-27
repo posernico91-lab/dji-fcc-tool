@@ -112,7 +112,7 @@ fun MainScreen(viewModel: MainViewModel) {
                                     letterSpacing = 2.sp
                                 )
                                 Text(
-                                    "• FCC PATCH CONSOLE •",
+                                    stringResource(R.string.hud_console_label),
                                     fontFamily = FontFamily.Monospace,
                                     color = FccColors.Cyan,
                                     fontSize = 9.sp,
@@ -179,25 +179,21 @@ fun MainScreen(viewModel: MainViewModel) {
 private fun ConfirmPatchDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("FCC-Patch wirklich senden?") },
+        title = { Text(stringResource(R.string.confirm_title)) },
         text = {
             Column {
-                Text(
-                    "2 Pakete (37 Bytes) gehen an den Controller und stellen " +
-                        "den Funkmodus auf FCC um.",
-                    fontSize = 14.sp
-                )
+                Text(stringResource(R.string.confirm_body), fontSize = 14.sp)
                 Spacer(Modifier.height(8.dp))
-                Text("• Nur der Controller wird verändert, nicht die Drohne.", fontSize = 13.sp)
-                Text("• Danach Controller einmal aus- und wieder einschalten — Pflicht.", fontSize = 13.sp)
-                Text("• In CE-Regionen rechtlich problematisch.", fontSize = 13.sp)
+                Text(stringResource(R.string.confirm_b1), fontSize = 13.sp)
+                Text(stringResource(R.string.confirm_b2), fontSize = 13.sp)
+                Text(stringResource(R.string.confirm_b3), fontSize = 13.sp)
             }
         },
         confirmButton = {
-            Button(onClick = onConfirm) { Text("Ja, FCC senden") }
+            Button(onClick = onConfirm) { Text(stringResource(R.string.btn_confirm_send)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Abbrechen") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.btn_cancel)) }
         }
     )
 }
@@ -218,7 +214,7 @@ private fun SafeModeBanner() {
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    "SAFE-MODE • DRY RUN",
+                    stringResource(R.string.safe_mode_title),
                     fontWeight = FontWeight.Black,
                     color = FccColors.Amber,
                     fontSize = 13.sp,
@@ -227,8 +223,7 @@ private fun SafeModeBanner() {
             }
             Spacer(Modifier.height(6.dp))
             Text(
-                "Es werden KEINE Bytes an die Hardware gesendet. " +
-                    "Die App protokolliert nur, welche Pakete sie senden würde.",
+                stringResource(R.string.safe_mode_body),
                 fontSize = 12.sp,
                 color = FccColors.TextMid
             )
@@ -365,7 +360,7 @@ private fun StatusCard(state: MainUiState) {
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    "// SYSTEM STATUS",
+                    stringResource(R.string.status_header),
                     style = MaterialTheme.typography.labelLarge,
                     color = FccColors.Cyan
                 )
@@ -377,11 +372,11 @@ private fun StatusCard(state: MainUiState) {
                 )
             }
             Spacer(Modifier.height(10.dp))
-            InfoRow("STEP", "${state.step.ordinal + 1} / 4 — ${state.step.name}")
-            InfoRow("MODE", state.currentMode.name)
-            InfoRow("DEVICE", state.deviceName ?: "—")
+            InfoRow(stringResource(R.string.label_step), "${state.step.ordinal + 1} / 4 — ${state.step.name}")
+            InfoRow(stringResource(R.string.label_mode), state.currentMode.name)
+            InfoRow(stringResource(R.string.label_device), state.deviceName ?: "—")
             if (state.vendorId != null) InfoRow(
-                "VID/PID",
+                stringResource(R.string.label_vidpid),
                 "0x${"%04X".format(state.vendorId)} / 0x${"%04X".format(state.productId ?: 0)}"
             )
             Spacer(Modifier.height(8.dp))
@@ -429,57 +424,36 @@ private fun ActionCard(state: MainUiState, vm: MainViewModel) {
     HudPanel(modifier = Modifier.fillMaxWidth(), accent = FccColors.Magenta) {
         Column(Modifier.padding(16.dp)) {
             Text(
-                "// NEXT ACTION",
+                stringResource(R.string.action_header),
                 style = MaterialTheme.typography.labelLarge,
                 color = FccColors.Magenta
             )
             Spacer(Modifier.height(10.dp))
             when (state.step) {
                 WizardStep.SCAN -> {
-                    HelpText(
-                        "So geht's:\n" +
-                            "1. DJI Fly App schließen (aus den letzten Apps wischen).\n" +
-                            "2. Controller einschalten.\n" +
-                            "3. USB-OTG-Kabel in den UNTEREN USB-C-Port des Controllers stecken,\n" +
-                            "   das andere Ende ins Handy.\n" +
-                            "4. Falls Android fragt: »FCC Switch« wählen.\n" +
-                            "5. Auf »Controller suchen« tippen."
-                    )
-                    PrimaryButton("Controller suchen", state.isBusy, vm::scanForRemote)
+                    HelpText(stringResource(R.string.scan_help))
+                    PrimaryButton(stringResource(R.string.btn_scan_controller), state.isBusy, vm::scanForRemote)
                 }
                 WizardStep.CONNECT -> {
-                    HelpText(
-                        "USB-Zugriff im System-Dialog erlauben " +
-                            "(»Immer verwenden« anhaken → Dialog kommt nicht erneut).\n" +
-                            "Kein Dialog? → nochmal auf »Verbinden« tippen."
-                    )
-                    PrimaryButton("Verbinden", state.isBusy, vm::scanForRemote)
+                    HelpText(stringResource(R.string.connect_help))
+                    PrimaryButton(stringResource(R.string.btn_connect), state.isBusy, vm::scanForRemote)
                 }
                 WizardStep.DETECT -> {
-                    HelpText(
-                        "Verbindung steht. Tippe auf »Weiter«, um den FCC-Patch vorzubereiten."
-                    )
-                    PrimaryButton("Weiter zum FCC-Patch", state.isBusy, vm::detectMode)
+                    HelpText(stringResource(R.string.detect_help))
+                    PrimaryButton(stringResource(R.string.btn_next_to_patch), state.isBusy, vm::detectMode)
                     Spacer(Modifier.height(8.dp))
-                    SecondaryButton("Trennen", state.isBusy, vm::disconnect)
+                    SecondaryButton(stringResource(R.string.btn_disconnect), state.isBusy, vm::disconnect)
                 }
                 WizardStep.PATCH -> {
                     if (state.patchSuccess) {
                         PostPatchInstructions(onDisconnect = vm::disconnect)
                     } else {
-                        HelpText(
-                            "Was passiert beim FCC aktivieren:\n" +
-                                "• 2 Pakete (37 Bytes) gehen an den Controller → Funkchip schaltet auf FCC.\n" +
-                                "• Mehr Sendeleistung, mehr Reichweite, 2.4 + 5.8 GHz.\n" +
-                                "• Die Drohne bleibt unverändert.\n\n" +
-                                "WICHTIG: Direkt nach dem Patch musst du den Controller " +
-                                "einmal aus- und wieder einschalten, damit FCC aktiv wird."
-                        )
-                        PrimaryButton("FCC aktivieren", state.isBusy, vm::applyFccPatch)
+                        HelpText(stringResource(R.string.patch_help))
+                        PrimaryButton(stringResource(R.string.btn_apply_fcc), state.isBusy, vm::applyFccPatch)
                         Spacer(Modifier.height(8.dp))
-                        SecondaryButton("Auf CE zurücksetzen", state.isBusy, vm::resetToCe)
+                        SecondaryButton(stringResource(R.string.btn_reset_ce), state.isBusy, vm::resetToCe)
                         Spacer(Modifier.height(8.dp))
-                        SecondaryButton("Trennen", state.isBusy, vm::disconnect)
+                        SecondaryButton(stringResource(R.string.btn_disconnect), state.isBusy, vm::disconnect)
                     }
                 }
             }
@@ -519,42 +493,36 @@ private fun PostPatchInstructions(onDisconnect: () -> Unit) {
     ) {
         Column(Modifier.padding(14.dp)) {
             Text(
-                "✅ FCC-Patch gesendet — jetzt Controller neu starten!",
+                stringResource(R.string.postpatch_header),
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )
             Spacer(Modifier.height(10.dp))
-            Text("Genau in dieser Reihenfolge:", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text(stringResource(R.string.postpatch_intro), fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(6.dp))
-            NumberedStep(1, "USB-Kabel vom Controller abziehen.")
-            NumberedStep(
-                2,
-                "Controller AUS- und wieder EINSCHALTEN " +
-                    "(langer Druck auf Power, bis alle LEDs aus sind — dann erneut langer Druck zum Einschalten).\n" +
-                    "⚠️ Pflicht: Ohne diesen Neustart wird FCC nicht aktiv.\n" +
-                    "⚠️ Drohne dabei NICHT ausschalten — sonst muss der Patch wiederholt werden."
-            )
-            NumberedStep(3, "Warten, bis der Controller fertig hochgefahren ist (Status-LEDs leuchten konstant).")
-            NumberedStep(4, "Drohne einschalten und Verbindung abwarten (Beep / konstante LED).")
-            NumberedStep(5, "USB-OTG-Kabel jetzt in den OBEREN USB-C-Port des Controllers stecken.")
-            NumberedStep(6, "DJI Fly öffnen — verbindet sich automatisch.")
+            NumberedStep(1, stringResource(R.string.postpatch_step_1))
+            NumberedStep(2, stringResource(R.string.postpatch_step_2))
+            NumberedStep(3, stringResource(R.string.postpatch_step_3))
+            NumberedStep(4, stringResource(R.string.postpatch_step_4))
+            NumberedStep(5, stringResource(R.string.postpatch_step_5))
+            NumberedStep(6, stringResource(R.string.postpatch_step_6))
 
             Spacer(Modifier.height(12.dp))
-            Text("FCC aktiv? So prüfst du es:", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(stringResource(R.string.check_title), fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
-            BulletText("DJI Fly → Einstellungen → Übertragung: »Frequenzband« zeigt 2.4 + 5.8 GHz (CE = nur 2.4).")
-            BulletText("Reichweiten-Anzeige im Kamera-Bild: FCC ≈ 10–15 km Theorie, CE ≈ 6 km.")
-            BulletText("Praxistest: über ~1,5 km Verbindung im Freien = FCC läuft.")
+            BulletText(stringResource(R.string.check_1))
+            BulletText(stringResource(R.string.check_2))
+            BulletText(stringResource(R.string.check_3))
 
             Spacer(Modifier.height(12.dp))
-            Text("Was bricht FCC?", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(stringResource(R.string.breaks_title), fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
-            BulletText("Controller ausschalten → zurück zu CE → Patch erneut anwenden.")
-            BulletText("Controller-Firmware-Update → entfernt evtl. den Patch.")
-            BulletText("Drohne aus reicht NICHT — solange der Controller an bleibt, hält FCC.")
+            BulletText(stringResource(R.string.breaks_1))
+            BulletText(stringResource(R.string.breaks_2))
+            BulletText(stringResource(R.string.breaks_3))
 
             Spacer(Modifier.height(12.dp))
-            SecondaryButton("Fertig — trennen", false, onDisconnect)
+            SecondaryButton(stringResource(R.string.btn_done), false, onDisconnect)
         }
     }
 }
@@ -588,15 +556,13 @@ private fun SafetyCard() {
     HudPanel(modifier = Modifier.fillMaxWidth(), accent = FccColors.Amber) {
         Column(Modifier.padding(14.dp)) {
             Text(
-                "// LEGAL NOTICE",
+                stringResource(R.string.safety_header),
                 style = MaterialTheme.typography.labelLarge,
                 color = FccColors.Amber
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                "Die FCC-Aktivierung ist außerhalb von FCC-Regionen (z. B. EU) " +
-                    "rechtlich problematisch. Verwende diese App nur dort, wo es " +
-                    "erlaubt ist. Es entsteht keinerlei Garantie- oder Haftungs­anspruch.",
+                stringResource(R.string.safety_body),
                 fontSize = 12.sp,
                 color = FccColors.TextMid,
                 lineHeight = 17.sp
@@ -622,7 +588,7 @@ private fun PrivacyOptionsButton() {
         OutlinedButton(
             onClick = { showDialog = true },
             modifier = Modifier.fillMaxWidth()
-        ) { Text("Datenschutzeinstellungen / Werbung") }
+        ) { Text(stringResource(R.string.privacy_options)) }
         if (BuildConfig.DEBUG) {
             Spacer(Modifier.height(4.dp))
             OutlinedButton(
@@ -632,7 +598,7 @@ private fun PrivacyOptionsButton() {
                     showDialog = true
                 },
                 modifier = Modifier.fillMaxWidth()
-            ) { Text("\uD83D\uDD27 Consent zurücksetzen (Debug)") }
+            ) { Text(stringResource(R.string.privacy_reset_debug)) }
         }
     }
 
@@ -660,32 +626,26 @@ private fun BuiltinConsentDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Datenschutz & Werbung") },
+        title = { Text(stringResource(R.string.consent_title)) },
         text = {
             Column {
-                Text(
-                    "Diese App ist kostenlos und wird durch Werbung finanziert (Google AdMob).\n\n" +
-                        "Bitte wähle, wie wir Werbung anzeigen dürfen:",
-                    fontSize = 14.sp
-                )
+                Text(stringResource(R.string.consent_body), fontSize = 14.sp)
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "• Personalisiert: Werbung passend zu deinen Interessen (Cookies/IDs).\n" +
-                        "• Nicht personalisiert: Allgemeine Werbung, ohne Profilbildung.\n" +
-                        "• Ablehnen: Keine Werbung, App funktioniert weiter.\n\n" +
-                        "Du kannst die Auswahl jederzeit über „Datenschutzeinstellungen“ ändern.",
+                    stringResource(R.string.consent_choices),
                     fontSize = 12.sp,
                     color = Color(0xFF666666)
                 )
                 if (current != ConsentManager.BuiltinDecision.NONE) {
                     Spacer(Modifier.height(8.dp))
+                    val label = when (current) {
+                        ConsentManager.BuiltinDecision.ACCEPT_PERSONALIZED -> stringResource(R.string.consent_choice_personalized)
+                        ConsentManager.BuiltinDecision.ACCEPT_NPA -> stringResource(R.string.consent_choice_npa)
+                        ConsentManager.BuiltinDecision.REJECT -> stringResource(R.string.consent_choice_reject)
+                        else -> "-"
+                    }
                     Text(
-                        "Aktuelle Auswahl: " + when (current) {
-                            ConsentManager.BuiltinDecision.ACCEPT_PERSONALIZED -> "Personalisiert"
-                            ConsentManager.BuiltinDecision.ACCEPT_NPA -> "Nicht personalisiert"
-                            ConsentManager.BuiltinDecision.REJECT -> "Abgelehnt"
-                            else -> "-"
-                        },
+                        stringResource(R.string.consent_current, label),
                         fontSize = 11.sp,
                         color = Color(0xFF888888)
                     )
@@ -694,16 +654,16 @@ private fun BuiltinConsentDialog(
         },
         confirmButton = {
             TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.ACCEPT_PERSONALIZED) }) {
-                Text("Personalisiert")
+                Text(stringResource(R.string.consent_choice_personalized))
             }
         },
         dismissButton = {
             Row {
                 TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.ACCEPT_NPA) }) {
-                    Text("Nicht personalisiert")
+                    Text(stringResource(R.string.consent_choice_npa))
                 }
                 TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.REJECT) }) {
-                    Text("Ablehnen")
+                    Text(stringResource(R.string.consent_choice_reject))
                 }
             }
         }
@@ -716,7 +676,7 @@ private fun LogsCard(logs: List<String>, onClear: () -> Unit) {
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "// TELEMETRY LOG",
+                    stringResource(R.string.logs_header),
                     style = MaterialTheme.typography.labelLarge,
                     color = FccColors.Cyan
                 )
@@ -724,7 +684,7 @@ private fun LogsCard(logs: List<String>, onClear: () -> Unit) {
                 OutlinedButton(
                     onClick = onClear,
                     enabled = logs.isNotEmpty()
-                ) { Text("CLEAR", fontSize = 11.sp, letterSpacing = 1.sp) }
+                ) { Text(stringResource(R.string.logs_clear), fontSize = 11.sp, letterSpacing = 1.sp) }
             }
             Spacer(Modifier.height(8.dp))
             Box(
@@ -736,7 +696,7 @@ private fun LogsCard(logs: List<String>, onClear: () -> Unit) {
                     .padding(8.dp)
             ) {
                 if (logs.isEmpty()) {
-                    Text("$ awaiting events…", color = FccColors.TextDim, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                    Text(stringResource(R.string.logs_empty), color = FccColors.TextDim, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
                 } else {
                     LazyColumn(
                         contentPadding = PaddingValues(vertical = 2.dp),

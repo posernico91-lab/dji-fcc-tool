@@ -3,10 +3,80 @@
     <string name="app_name">FCC Switch</string>
     <string name="app_tagline">Desbloqueador de alcance DJI Mini</string>
     <string name="developer_credit">Desarrollado por Poser.py</string>
+    <string name="hud_console_label">• CONSOLA DE PARCHE FCC •</string>
+
+    <string name="safe_mode_title">MODO SEGURO • SIMULACIÓN</string>
+    <string name="safe_mode_body">No se envían bytes al hardware. La app solo registra qué paquetes se enviarían.</string>
+
+    <string name="status_header">// ESTADO DEL SISTEMA</string>
+    <string name="label_step">PASO</string>
+    <string name="label_mode">MODO</string>
+    <string name="label_device">DISPOSITIVO</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// SIGUIENTE ACCIÓN</string>
+
+    <string name="scan_help">Cómo empezar:\n1. Cierra la app DJI Fly (deslízala desde recientes).\n2. Enciende el control remoto.\n3. Conecta el cable USB-OTG al puerto USB-C INFERIOR del control, el otro extremo al móvil.\n4. Si Android pregunta: elige »FCC Switch«.\n5. Toca »Buscar control«.</string>
+    <string name="connect_help">Permite el acceso USB en el diálogo del sistema (marca »Usar siempre« para que no vuelva a aparecer).\n¿No aparece? → Toca »Conectar« otra vez.</string>
+    <string name="detect_help">Conexión establecida. Toca »Continuar« para preparar el parche FCC.</string>
+    <string name="patch_help">Qué pasa al activar FCC:\n• 2 paquetes (37 bytes) van al control → el chip de radio cambia a FCC.\n• Más potencia, más alcance, 2.4 + 5.8 GHz.\n• El dron permanece intacto.\n\nIMPORTANTE: Justo después del parche DEBES apagar y encender el control, si no FCC no se activará.</string>
+
+    <string name="btn_scan_controller">Buscar control</string>
+    <string name="btn_connect">Conectar</string>
+    <string name="btn_next_to_patch">Continuar al parche FCC</string>
+    <string name="btn_disconnect">Desconectar</string>
+    <string name="btn_apply_fcc">Activar FCC</string>
+    <string name="btn_reset_ce">Restablecer a CE</string>
+    <string name="btn_done">Hecho — desconectar</string>
+    <string name="btn_cancel">Cancelar</string>
+
+    <string name="confirm_title">¿Enviar el parche FCC ahora?</string>
+    <string name="confirm_body">Se envían 2 paquetes (37 bytes) al control que cambian el modo de radio a FCC.</string>
+    <string name="confirm_b1">• Solo se modifica el control, no el dron.</string>
+    <string name="confirm_b2">• Después DEBES apagar y encender el control — obligatorio.</string>
+    <string name="confirm_b3">• Fuera de regiones FCC puede ser legalmente problemático.</string>
+    <string name="btn_confirm_send">Sí, enviar FCC</string>
+
+    <string name="postpatch_header">✅ Parche FCC enviado — ¡ahora reinicia el control!</string>
+    <string name="postpatch_intro">Hazlo exactamente en este orden:</string>
+    <string name="postpatch_step_1">Desconecta el cable USB del control.</string>
+    <string name="postpatch_step_2">APAGA y vuelve a ENCENDER el control (mantén pulsado el botón de encendido hasta que todos los LED se apaguen — luego mantén pulsado de nuevo para encender).\n⚠ Obligatorio: sin este reinicio FCC no se activará.\n⚠ NO apagues el dron — si lo haces, hay que repetir el parche.</string>
+    <string name="postpatch_step_3">Espera a que el control termine de arrancar (LEDs de estado fijos).</string>
+    <string name="postpatch_step_4">Enciende el dron y espera el enlace (pitido / LED fijo).</string>
+    <string name="postpatch_step_5">Conecta ahora el cable USB-OTG al puerto USB-C SUPERIOR del control.</string>
+    <string name="postpatch_step_6">Abre DJI Fly — se reconectará automáticamente.</string>
+
+    <string name="check_title">¿FCC activo? Cómo comprobarlo:</string>
+    <string name="check_1">DJI Fly → Ajustes → Transmisión: »Banda de frecuencia« muestra 2.4 + 5.8 GHz (CE = solo 2.4).</string>
+    <string name="check_2">Indicador de alcance en la cámara: FCC ≈ 10–15 km en teoría, CE ≈ 6 km.</string>
+    <string name="check_3">Prueba real: enlace estable a más de ~1,5 km al aire libre = FCC activo.</string>
+
+    <string name="breaks_title">¿Qué rompe FCC?</string>
+    <string name="breaks_1">Apagar el control → vuelve a CE → reaplica el parche.</string>
+    <string name="breaks_2">Una actualización del firmware del control puede borrar el parche.</string>
+    <string name="breaks_3">Apagar solo el dron NO lo rompe — mientras el control siga encendido.</string>
+
+    <string name="safety_header">// AVISO LEGAL</string>
+    <string name="safety_body">Activar FCC fuera de regiones FCC (p. ej. UE) puede ser legalmente problemático. Usa esta app solo donde esté permitido. Sin garantías ni responsabilidad.</string>
+
+    <string name="logs_header">// REGISTRO DE TELEMETRÍA</string>
+    <string name="logs_clear">BORRAR</string>
+    <string name="logs_empty">$ esperando eventos…</string>
+
+    <string name="privacy_options">Privacidad y anuncios</string>
+    <string name="privacy_reset_debug">🔧 Restablecer consentimiento (debug)</string>
+    <string name="consent_title">Privacidad y anuncios</string>
+    <string name="consent_body">Esta app es gratuita y se financia con anuncios (Google AdMob).\n\nElige cómo podemos mostrar anuncios:</string>
+    <string name="consent_choices">• Personalizados: anuncios según tus intereses (cookies/IDs).\n• No personalizados: anuncios genéricos, sin perfilado.\n• Rechazar: sin anuncios, la app sigue funcionando.\n\nPuedes cambiarlo cuando quieras desde »Privacidad y anuncios«.</string>
+    <string name="consent_current">Selección actual: %1$s</string>
+    <string name="consent_choice_personalized">Personalizados</string>
+    <string name="consent_choice_npa">No personalizados</string>
+    <string name="consent_choice_reject">Rechazar</string>
+
     <string name="connect">Escanear USB</string>
     <string name="status_check">Comprobar estado</string>
     <string name="force_fcc">Activar FCC</string>
     <string name="reset_ce">Restablecer / CE</string>
     <string name="disconnect">Desconectar</string>
-    <string name="privacy_options">Opciones de privacidad</string>
 </resources>

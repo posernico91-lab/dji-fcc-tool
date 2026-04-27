@@ -3,10 +3,80 @@
     <string name="app_name">FCC Switch</string>
     <string name="app_tagline">Déverrouilleur de portée DJI Mini</string>
     <string name="developer_credit">Développé par Poser.py</string>
+    <string name="hud_console_label">• CONSOLE PATCH FCC •</string>
+
+    <string name="safe_mode_title">MODE SÛR • SIMULATION</string>
+    <string name="safe_mode_body">Aucun octet n\'est envoyé au matériel. L\'app n\'enregistre que les paquets qu\'elle enverrait.</string>
+
+    <string name="status_header">// ÉTAT SYSTÈME</string>
+    <string name="label_step">ÉTAPE</string>
+    <string name="label_mode">MODE</string>
+    <string name="label_device">APPAREIL</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// PROCHAINE ACTION</string>
+
+    <string name="scan_help">Comment commencer :\n1. Fermez l\'app DJI Fly (balayez-la depuis les récents).\n2. Allumez la radiocommande.\n3. Branchez le câble USB-OTG sur le port USB-C INFÉRIEUR de la radio, l\'autre extrémité dans le téléphone.\n4. Si Android demande : choisissez « FCC Switch ».\n5. Touchez « Rechercher la radio ».</string>
+    <string name="connect_help">Autorisez l\'accès USB dans la boîte de dialogue système (cochez « Toujours utiliser » pour qu\'elle ne réapparaisse plus).\nPas de dialogue ? → Touchez « Connecter » à nouveau.</string>
+    <string name="detect_help">Connexion établie. Touchez « Continuer » pour préparer le patch FCC.</string>
+    <string name="patch_help">Ce qui se passe à l\'activation FCC :\n• 2 paquets (37 octets) sont envoyés à la radio → la puce radio bascule en FCC.\n• Plus de puissance, plus de portée, 2.4 + 5.8 GHz.\n• Le drone reste intact.\n\nIMPORTANT : juste après le patch, vous DEVEZ éteindre puis rallumer la radio, sinon FCC ne s\'activera pas.</string>
+
+    <string name="btn_scan_controller">Rechercher la radio</string>
+    <string name="btn_connect">Connecter</string>
+    <string name="btn_next_to_patch">Passer au patch FCC</string>
+    <string name="btn_disconnect">Déconnecter</string>
+    <string name="btn_apply_fcc">Activer FCC</string>
+    <string name="btn_reset_ce">Réinitialiser sur CE</string>
+    <string name="btn_done">Terminé — déconnecter</string>
+    <string name="btn_cancel">Annuler</string>
+
+    <string name="confirm_title">Envoyer le patch FCC maintenant ?</string>
+    <string name="confirm_body">2 paquets (37 octets) sont envoyés à la radio et basculent le mode radio sur FCC.</string>
+    <string name="confirm_b1">• Seule la radio est modifiée, pas le drone.</string>
+    <string name="confirm_b2">• Ensuite, vous DEVEZ éteindre puis rallumer la radio — obligatoire.</string>
+    <string name="confirm_b3">• En dehors des zones FCC, cela peut être problématique légalement.</string>
+    <string name="btn_confirm_send">Oui, envoyer FCC</string>
+
+    <string name="postpatch_header">✅ Patch FCC envoyé — redémarrez la radio !</string>
+    <string name="postpatch_intro">Procédez exactement dans cet ordre :</string>
+    <string name="postpatch_step_1">Débranchez le câble USB de la radio.</string>
+    <string name="postpatch_step_2">ÉTEIGNEZ puis RALLUMEZ la radio (appui long sur le bouton d\'alimentation jusqu\'à extinction des LEDs — puis nouvel appui long pour rallumer).\n⚠ Obligatoire : sans ce redémarrage, FCC ne s\'activera pas.\n⚠ N\'éteignez PAS le drone — sinon il faudra refaire le patch.</string>
+    <string name="postpatch_step_3">Attendez que la radio soit complètement démarrée (LEDs d\'état fixes).</string>
+    <string name="postpatch_step_4">Allumez le drone et attendez la liaison (bip / LED fixe).</string>
+    <string name="postpatch_step_5">Branchez maintenant le câble USB-OTG sur le port USB-C SUPÉRIEUR de la radio.</string>
+    <string name="postpatch_step_6">Ouvrez DJI Fly — il se reconnecte automatiquement.</string>
+
+    <string name="check_title">FCC actif ? Comment vérifier :</string>
+    <string name="check_1">DJI Fly → Paramètres → Transmission : « Bande de fréquence » affiche 2.4 + 5.8 GHz (CE = 2.4 uniquement).</string>
+    <string name="check_2">Indicateur de portée dans la caméra : FCC ≈ 10–15 km en théorie, CE ≈ 6 km.</string>
+    <string name="check_3">Test pratique : liaison stable au-delà de ~1,5 km en extérieur = FCC fonctionne.</string>
+
+    <string name="breaks_title">Qu\'est-ce qui casse FCC ?</string>
+    <string name="breaks_1">Éteindre la radio → retour en CE → réappliquer le patch.</string>
+    <string name="breaks_2">Une mise à jour du firmware de la radio peut supprimer le patch.</string>
+    <string name="breaks_3">Éteindre uniquement le drone NE casse PAS — tant que la radio reste allumée.</string>
+
+    <string name="safety_header">// AVIS LÉGAL</string>
+    <string name="safety_body">Activer FCC en dehors des régions FCC (p. ex. UE) peut être problématique légalement. N\'utilisez cette app que là où c\'est autorisé. Aucune garantie, aucune responsabilité.</string>
+
+    <string name="logs_header">// JOURNAL TÉLÉMÉTRIE</string>
+    <string name="logs_clear">EFFACER</string>
+    <string name="logs_empty">$ en attente d\'événements…</string>
+
+    <string name="privacy_options">Confidentialité et publicité</string>
+    <string name="privacy_reset_debug">🔧 Réinitialiser le consentement (debug)</string>
+    <string name="consent_title">Confidentialité et publicité</string>
+    <string name="consent_body">Cette app est gratuite et financée par la publicité (Google AdMob).\n\nChoisissez comment nous pouvons afficher les pubs :</string>
+    <string name="consent_choices">• Personnalisées : pubs adaptées à vos intérêts (cookies/IDs).\n• Non personnalisées : pubs génériques, sans profilage.\n• Refuser : aucune pub, l\'app continue de fonctionner.\n\nVous pouvez changer à tout moment via « Confidentialité et publicité ».</string>
+    <string name="consent_current">Choix actuel : %1$s</string>
+    <string name="consent_choice_personalized">Personnalisées</string>
+    <string name="consent_choice_npa">Non personnalisées</string>
+    <string name="consent_choice_reject">Refuser</string>
+
     <string name="connect">Scanner USB</string>
     <string name="status_check">Vérifier l\'état</string>
     <string name="force_fcc">Activer FCC</string>
     <string name="reset_ce">Réinitialiser / CE</string>
     <string name="disconnect">Déconnecter</string>
-    <string name="privacy_options">Options de confidentialité</string>
 </resources>

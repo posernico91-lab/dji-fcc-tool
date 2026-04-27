@@ -3,10 +3,80 @@
     <string name="app_name">FCC Switch</string>
     <string name="app_tagline">DJI Mini Reichweiten-Unlocker</string>
     <string name="developer_credit">Entwickelt von Poser.py</string>
+    <string name="hud_console_label">• FCC PATCH CONSOLE •</string>
+
+    <string name="safe_mode_title">SAFE-MODUS • TROCKENLAUF</string>
+    <string name="safe_mode_body">Es werden KEINE Bytes an die Hardware gesendet. Die App protokolliert nur, welche Pakete sie senden würde.</string>
+
+    <string name="status_header">// SYSTEM-STATUS</string>
+    <string name="label_step">SCHRITT</string>
+    <string name="label_mode">MODUS</string>
+    <string name="label_device">GERÄT</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// NÄCHSTER SCHRITT</string>
+
+    <string name="scan_help">So geht\'s:\n1. DJI Fly App schließen (aus den letzten Apps wischen).\n2. Controller einschalten.\n3. USB-OTG-Kabel in den UNTEREN USB-C-Port des Controllers stecken, das andere Ende ins Handy.\n4. Falls Android fragt: »FCC Switch« wählen.\n5. Auf »Controller suchen« tippen.</string>
+    <string name="connect_help">USB-Zugriff im System-Dialog erlauben (»Immer verwenden« anhaken → Dialog kommt nicht erneut).\nKein Dialog? → nochmal auf »Verbinden« tippen.</string>
+    <string name="detect_help">Verbindung steht. Tippe auf »Weiter«, um den FCC-Patch vorzubereiten.</string>
+    <string name="patch_help">Was passiert beim FCC aktivieren:\n• 2 Pakete (37 Bytes) gehen an den Controller → Funkchip schaltet auf FCC.\n• Mehr Sendeleistung, mehr Reichweite, 2.4 + 5.8 GHz.\n• Die Drohne bleibt unverändert.\n\nWICHTIG: Direkt nach dem Patch musst du den Controller einmal aus- und wieder einschalten, sonst wird FCC nicht aktiv.</string>
+
+    <string name="btn_scan_controller">Controller suchen</string>
+    <string name="btn_connect">Verbinden</string>
+    <string name="btn_next_to_patch">Weiter zum FCC-Patch</string>
+    <string name="btn_disconnect">Trennen</string>
+    <string name="btn_apply_fcc">FCC aktivieren</string>
+    <string name="btn_reset_ce">Auf CE zurücksetzen</string>
+    <string name="btn_done">Fertig — trennen</string>
+    <string name="btn_cancel">Abbrechen</string>
+
+    <string name="confirm_title">FCC-Patch jetzt senden?</string>
+    <string name="confirm_body">2 Pakete (37 Bytes) gehen an den Controller und stellen den Funkmodus auf FCC um.</string>
+    <string name="confirm_b1">• Nur der Controller wird verändert, nicht die Drohne.</string>
+    <string name="confirm_b2">• Danach Controller einmal aus- und wieder einschalten — Pflicht.</string>
+    <string name="confirm_b3">• In CE-Regionen rechtlich problematisch.</string>
+    <string name="btn_confirm_send">Ja, FCC senden</string>
+
+    <string name="postpatch_header">✅ FCC-Patch gesendet — jetzt Controller neu starten!</string>
+    <string name="postpatch_intro">Genau in dieser Reihenfolge:</string>
+    <string name="postpatch_step_1">USB-Kabel vom Controller abziehen.</string>
+    <string name="postpatch_step_2">Controller AUS- und wieder EINSCHALTEN (langer Druck auf Power, bis alle LEDs aus sind — dann erneut langer Druck zum Einschalten).\n⚠ Pflicht: Ohne diesen Neustart wird FCC nicht aktiv.\n⚠ Drohne dabei NICHT ausschalten — sonst muss der Patch wiederholt werden.</string>
+    <string name="postpatch_step_3">Warten, bis der Controller fertig hochgefahren ist (Status-LEDs leuchten konstant).</string>
+    <string name="postpatch_step_4">Drohne einschalten und Verbindung abwarten (Beep / konstante LED).</string>
+    <string name="postpatch_step_5">USB-OTG-Kabel jetzt in den OBEREN USB-C-Port des Controllers stecken.</string>
+    <string name="postpatch_step_6">DJI Fly öffnen — verbindet sich automatisch.</string>
+
+    <string name="check_title">FCC aktiv? So prüfst du es:</string>
+    <string name="check_1">DJI Fly → Einstellungen → Übertragung: »Frequenzband« zeigt 2.4 + 5.8 GHz (CE = nur 2.4).</string>
+    <string name="check_2">Reichweiten-Anzeige im Kamera-Bild: FCC ≈ 10–15 km Theorie, CE ≈ 6 km.</string>
+    <string name="check_3">Praxistest: über ~1,5 km Verbindung im Freien = FCC läuft.</string>
+
+    <string name="breaks_title">Was bricht FCC?</string>
+    <string name="breaks_1">Controller ausschalten → zurück zu CE → Patch erneut anwenden.</string>
+    <string name="breaks_2">Controller-Firmware-Update → entfernt evtl. den Patch.</string>
+    <string name="breaks_3">Drohne aus reicht NICHT — solange der Controller an bleibt, hält FCC.</string>
+
+    <string name="safety_header">// RECHTLICHER HINWEIS</string>
+    <string name="safety_body">Die FCC-Aktivierung ist außerhalb von FCC-Regionen (z. B. EU) rechtlich problematisch. Verwende diese App nur dort, wo es erlaubt ist. Es entsteht keinerlei Garantie- oder Haftungsanspruch.</string>
+
+    <string name="logs_header">// TELEMETRIE-LOG</string>
+    <string name="logs_clear">LEEREN</string>
+    <string name="logs_empty">$ warte auf Ereignisse…</string>
+
+    <string name="privacy_options">Datenschutz &amp; Werbung</string>
+    <string name="privacy_reset_debug">🔧 Consent zurücksetzen (Debug)</string>
+    <string name="consent_title">Datenschutz &amp; Werbung</string>
+    <string name="consent_body">Diese App ist kostenlos und wird durch Werbung finanziert (Google AdMob).\n\nBitte wähle, wie wir Werbung anzeigen dürfen:</string>
+    <string name="consent_choices">• Personalisiert: Werbung passend zu deinen Interessen (Cookies/IDs).\n• Nicht personalisiert: Allgemeine Werbung, ohne Profilbildung.\n• Ablehnen: Keine Werbung, App funktioniert weiter.\n\nDu kannst die Auswahl jederzeit über »Datenschutz &amp; Werbung« ändern.</string>
+    <string name="consent_current">Aktuelle Auswahl: %1$s</string>
+    <string name="consent_choice_personalized">Personalisiert</string>
+    <string name="consent_choice_npa">Nicht personalisiert</string>
+    <string name="consent_choice_reject">Ablehnen</string>
+
     <string name="connect">USB scannen</string>
     <string name="status_check">Status prüfen</string>
     <string name="force_fcc">FCC aktivieren</string>
     <string name="reset_ce">Zurücksetzen / CE</string>
     <string name="disconnect">Verbindung trennen</string>
-    <string name="privacy_options">Datenschutz-Einstellungen</string>
 </resources>

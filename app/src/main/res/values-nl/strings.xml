@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FCC Switch</string>
-    <string name="app_tagline">DJI Mini bereik-ontgrendelaar</string>
+    <string name="app_tagline">DJI Mini bereik-unlocker</string>
     <string name="developer_credit">Ontwikkeld door Poser.py</string>
+    <string name="hud_console_label">• FCC PATCH CONSOLE •</string>
+
+    <string name="safe_mode_title">VEILIGE MODUS • DROOG­LOOP</string>
+    <string name="safe_mode_body">Er worden GEEN bytes naar de hardware gestuurd. De app logt alleen welke pakketten zou worden verzonden.</string>
+
+    <string name="status_header">// SYSTEEM­STATUS</string>
+    <string name="label_step">STAP</string>
+    <string name="label_mode">MODUS</string>
+    <string name="label_device">APPARAAT</string>
+    <string name="label_vidpid">VID/PID</string>
+    <string name="label_error_prefix">⚠</string>
+
+    <string name="action_header">// VOLGENDE ACTIE</string>
+
+    <string name="scan_help">Zo begin je:\n1. Sluit de DJI Fly app (veeg hem weg uit recent).\n2. Zet de controller aan.\n3. Stop de USB-OTG-kabel in de ONDERSTE USB-C-poort van de controller, andere kant in je telefoon.\n4. Als Android vraagt: kies »FCC Switch«.\n5. Tik op »Controller zoeken«.</string>
+    <string name="connect_help">Sta USB-toegang toe in het systeemvenster (vink »Altijd gebruiken« aan zodat het venster niet meer verschijnt).\nGeen venster? → Tik nogmaals op »Verbinden«.</string>
+    <string name="detect_help">Verbinding staat. Tik op »Verder« om de FCC-patch voor te bereiden.</string>
+    <string name="patch_help">Wat gebeurt er bij FCC inschakelen:\n• 2 pakketten (37 bytes) gaan naar de controller → radiochip schakelt naar FCC.\n• Meer zendvermogen, meer bereik, 2.4 + 5.8 GHz.\n• De drone blijft ongewijzigd.\n\nBELANGRIJK: Direct na de patch MOET je de controller een keer uit- en weer inschakelen, anders wordt FCC niet actief.</string>
+
+    <string name="btn_scan_controller">Controller zoeken</string>
+    <string name="btn_connect">Verbinden</string>
+    <string name="btn_next_to_patch">Verder naar FCC-patch</string>
+    <string name="btn_disconnect">Verbinding verbreken</string>
+    <string name="btn_apply_fcc">FCC inschakelen</string>
+    <string name="btn_reset_ce">Terug naar CE</string>
+    <string name="btn_done">Klaar — verbinding verbreken</string>
+    <string name="btn_cancel">Annuleren</string>
+
+    <string name="confirm_title">FCC-patch nu sturen?</string>
+    <string name="confirm_body">2 pakketten (37 bytes) gaan naar de controller en zetten de radiomodus op FCC.</string>
+    <string name="confirm_b1">• Alleen de controller wordt aangepast, niet de drone.</string>
+    <string name="confirm_b2">• Daarna MOET je de controller uit- en weer inschakelen — verplicht.</string>
+    <string name="confirm_b3">• Buiten FCC-regio\'s kan het juridisch problematisch zijn.</string>
+    <string name="btn_confirm_send">Ja, FCC sturen</string>
+
+    <string name="postpatch_header">✅ FCC-patch verzonden — start nu de controller opnieuw!</string>
+    <string name="postpatch_intro">Doe het exact in deze volgorde:</string>
+    <string name="postpatch_step_1">Trek de USB-kabel uit de controller.</string>
+    <string name="postpatch_step_2">Schakel de controller UIT en weer AAN (lang drukken op power tot alle LED\'s uit zijn — daarna opnieuw lang drukken om in te schakelen).\n⚠ Verplicht: zonder deze herstart wordt FCC niet actief.\n⚠ Schakel de drone NIET uit — anders moet de patch opnieuw.</string>
+    <string name="postpatch_step_3">Wacht tot de controller volledig is opgestart (status-LED\'s constant).</string>
+    <string name="postpatch_step_4">Schakel de drone in en wacht op verbinding (piep / constante LED).</string>
+    <string name="postpatch_step_5">Stop de USB-OTG-kabel nu in de BOVENSTE USB-C-poort van de controller.</string>
+    <string name="postpatch_step_6">Open DJI Fly — verbindt automatisch.</string>
+
+    <string name="check_title">FCC actief? Zo controleer je het:</string>
+    <string name="check_1">DJI Fly → Instellingen → Transmissie: »Frequentieband« toont 2.4 + 5.8 GHz (CE = alleen 2.4).</string>
+    <string name="check_2">Bereikindicator in beeld: FCC ≈ 10–15 km in theorie, CE ≈ 6 km.</string>
+    <string name="check_3">Praktijktest: stabiele verbinding boven ~1,5 km buiten = FCC werkt.</string>
+
+    <string name="breaks_title">Wat breekt FCC?</string>
+    <string name="breaks_1">Controller uitschakelen → terug naar CE → patch opnieuw toepassen.</string>
+    <string name="breaks_2">Een controller-firmware-update kan de patch verwijderen.</string>
+    <string name="breaks_3">Alleen de drone uitzetten breekt het NIET — zolang de controller aan blijft.</string>
+
+    <string name="safety_header">// JURIDISCHE MEDEDELING</string>
+    <string name="safety_body">FCC inschakelen buiten FCC-regio\'s (bv. EU) kan juridisch problematisch zijn. Gebruik deze app alleen waar het is toegestaan. Geen garantie, geen aansprakelijkheid.</string>
+
+    <string name="logs_header">// TELEMETRIE-LOG</string>
+    <string name="logs_clear">WISSEN</string>
+    <string name="logs_empty">$ wachten op events…</string>
+
+    <string name="privacy_options">Privacy en advertenties</string>
+    <string name="privacy_reset_debug">🔧 Toestemming resetten (debug)</string>
+    <string name="consent_title">Privacy en advertenties</string>
+    <string name="consent_body">Deze app is gratis en wordt door advertenties gefinancierd (Google AdMob).\n\nKies hoe wij advertenties mogen tonen:</string>
+    <string name="consent_choices">• Gepersonaliseerd: advertenties die bij je interesses passen (cookies/ID\'s).\n• Niet-gepersonaliseerd: algemene advertenties, geen profilering.\n• Weigeren: geen advertenties, app blijft werken.\n\nJe kunt dit op elk moment wijzigen via »Privacy en advertenties«.</string>
+    <string name="consent_current">Huidige keuze: %1$s</string>
+    <string name="consent_choice_personalized">Gepersonaliseerd</string>
+    <string name="consent_choice_npa">Niet-gepersonaliseerd</string>
+    <string name="consent_choice_reject">Weigeren</string>
+
     <string name="connect">USB scannen</string>
     <string name="status_check">Status controleren</string>
-    <string name="force_fcc">FCC activeren</string>
+    <string name="force_fcc">FCC inschakelen</string>
     <string name="reset_ce">Resetten / CE</string>
     <string name="disconnect">Verbinding verbreken</string>
-    <string name="privacy_options">Privacy-instellingen</string>
 </resources>
