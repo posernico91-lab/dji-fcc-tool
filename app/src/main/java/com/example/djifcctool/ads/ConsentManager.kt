@@ -30,9 +30,43 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 object ConsentManager {
     private const val TAG = "ConsentManager"
+    private const val PREFS = "fcc_switch_consent"
+    private const val KEY_BUILTIN_DECISION = "builtin_decision" // "accept_personalized", "accept_npa", "reject", null
+    private const val KEY_BUILTIN_TIMESTAMP = "builtin_ts"
 
     @Volatile private var consentInformation: ConsentInformation? = null
     private val initialized = AtomicBoolean(false)
+
+    // ---------- Built-in Consent (immer verfügbar, unabhängig von AdMob Console) ----------
+
+    enum class BuiltinDecision { NONE, ACCEPT_PERSONALIZED, ACCEPT_NPA, REJECT }
+
+    fun getBuiltinDecision(context: Context): BuiltinDecision {
+        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        return when (prefs.getString(KEY_BUILTIN_DECISION, null)) {
+            "accept_personalized" -> BuiltinDecision.ACCEPT_PERSONALIZED
+            "accept_npa" -> BuiltinDecision.ACCEPT_NPA
+            "reject" -> BuiltinDecision.REJECT
+            else -> BuiltinDecision.NONE
+        }
+    }
+
+    fun setBuiltinDecision(context: Context, decision: BuiltinDecision) {
+        val value = when (decision) {
+            BuiltinDecision.ACCEPT_PERSONALIZED -> "accept_personalized"
+            BuiltinDecision.ACCEPT_NPA -> "accept_npa"
+            BuiltinDecision.REJECT -> "reject"
+            BuiltinDecision.NONE -> null
+        }
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+            .putString(KEY_BUILTIN_DECISION, value)
+            .putLong(KEY_BUILTIN_TIMESTAMP, System.currentTimeMillis())
+            .apply()
+    }
+
+    fun resetBuiltinDecision(context: Context) {
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().clear().apply()
+    }
 
     /**
      * Lädt + zeigt das Consent-Form (falls erforderlich).
@@ -63,12 +97,12 @@ object ConsentManager {
                     if (formError != null) {
                         Log.w(TAG, "Consent form error: ${formError.message}")
                     }
-                    onReady(info.canRequestAds())
+                    onReady(canRequestAds(activity))
                 }
             },
             { requestError ->
                 Log.w(TAG, "Consent request error: ${requestError.message}")
-                onReady(info.canRequestAds())
+                onReady(canRequestAds(activity))
             }
         )
     }
@@ -113,26 +147,34 @@ object ConsentManager {
         }
     }
 
-    /** True, sobald UMP grünes Licht für Ad-Requests gibt. */
+    /** True, sobald wir grünes Licht für Ad-Requests haben (Built-in ODER UMP). */
     fun canRequestAds(context: Context): Boolean {
+        // Priorität: eigener Built-in-Consent. Wenn Nutzer "REJECT" gewählt hat → keine Ads.
+        when (getBuiltinDecision(context)) {
+            BuiltinDecision.ACCEPT_PERSONALIZED, BuiltinDecision.ACCEPT_NPA -> return true
+            BuiltinDecision.REJECT -> return false
+            BuiltinDecision.NONE -> { /* falle durch zu UMP */ }
+        }
         val info = consentInformation
             ?: UserMessagingPlatform.getConsentInformation(context).also { consentInformation = it }
         return info.canRequestAds()
     }
 
     /**
-     * Sehr konservativ: wenn die TCF-String-Prüfung uns nicht
-     * eindeutig sagt, dass personalisierte Ads erlaubt sind,
-     * fallen wir auf NPA (`npa=1`) zurück.
+     * NPA aktiv, wenn:
+     *  – Built-in: Nutzer hat ACCEPT_NPA oder REJECT gewählt, ODER
+     *  – Built-in: keine Entscheidung UND TCF sagt Purpose 1 != '1'.
      */
     fun isNonPersonalized(context: Context): Boolean {
-        // UMP/TCF-Daten landen im DefaultSharedPreferences-File des Pakets.
+        when (getBuiltinDecision(context)) {
+            BuiltinDecision.ACCEPT_PERSONALIZED -> return false
+            BuiltinDecision.ACCEPT_NPA, BuiltinDecision.REJECT -> return true
+            BuiltinDecision.NONE -> { /* falle durch zu TCF-Check */ }
+        }
         val prefs = context.getSharedPreferences(
             context.packageName + "_preferences", Context.MODE_PRIVATE
         )
         val tcfPurposeConsents = prefs.getString("IABTCF_PurposeConsents", null)
-        // Purpose 1 = Speichern/Zugriff auf Informationen auf dem Gerät.
-        // Wenn Purpose 1 nicht erteilt → keine personalisierten Ads.
         if (tcfPurposeConsents.isNullOrEmpty()) return true
         val purpose1 = tcfPurposeConsents.firstOrNull() ?: return true
         return purpose1 != '1'

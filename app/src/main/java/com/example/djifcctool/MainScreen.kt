@@ -35,8 +35,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.djifcctool.ads.AdmobBanner
 import com.example.djifcctool.ads.AdmobNative
+import com.example.djifcctool.ads.AdsManager
 import com.example.djifcctool.ads.ConsentManager
 
 /**
@@ -437,26 +442,105 @@ private fun SafetyCard() {
 private fun PrivacyOptionsButton() {
     val context = androidx.compose.ui.platform.LocalContext.current
     val activity = context as? android.app.Activity ?: return
+    var showDialog by remember { mutableStateOf(false) }
+
+    // Beim allerersten Start (noch keine Entscheidung gespeichert) automatisch zeigen.
+    LaunchedEffect(Unit) {
+        if (ConsentManager.getBuiltinDecision(context) == ConsentManager.BuiltinDecision.NONE) {
+            showDialog = true
+        }
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedButton(
-            onClick = {
-                if (ConsentManager.isPrivacyOptionsRequired()) {
-                    ConsentManager.showPrivacyOptionsForm(activity)
-                } else {
-                    // Erzwinge erneutes Laden + Anzeigen des Consent-Forms
-                    ConsentManager.forceShowConsentForm(activity)
-                }
-            },
+            onClick = { showDialog = true },
             modifier = Modifier.fillMaxWidth()
         ) { Text("Datenschutzeinstellungen / Werbung") }
         if (BuildConfig.DEBUG) {
             Spacer(Modifier.height(4.dp))
             OutlinedButton(
-                onClick = { ConsentManager.resetAndReshow(activity) },
+                onClick = {
+                    ConsentManager.resetBuiltinDecision(context)
+                    ConsentManager.resetAndReshow(activity)
+                    showDialog = true
+                },
                 modifier = Modifier.fillMaxWidth()
             ) { Text("\uD83D\uDD27 Consent zurücksetzen (Debug)") }
         }
     }
+
+    if (showDialog) {
+        BuiltinConsentDialog(
+            current = ConsentManager.getBuiltinDecision(context),
+            onChoice = { decision ->
+                ConsentManager.setBuiltinDecision(context, decision)
+                showDialog = false
+                if (decision != ConsentManager.BuiltinDecision.REJECT) {
+                    AdsManager.initializeIfAllowed(activity.application)
+                    (activity.application as? DjiFccApp)?.onConsentReady()
+                }
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+}
+
+@Composable
+private fun BuiltinConsentDialog(
+    current: ConsentManager.BuiltinDecision,
+    onChoice: (ConsentManager.BuiltinDecision) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Datenschutz & Werbung") },
+        text = {
+            Column {
+                Text(
+                    "Diese App ist kostenlos und wird durch Werbung finanziert (Google AdMob).\n\n" +
+                        "Bitte wähle, wie wir Werbung anzeigen dürfen:",
+                    fontSize = 14.sp
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "• Personalisiert: Werbung passend zu deinen Interessen (Cookies/IDs).\n" +
+                        "• Nicht personalisiert: Allgemeine Werbung, ohne Profilbildung.\n" +
+                        "• Ablehnen: Keine Werbung, App funktioniert weiter.\n\n" +
+                        "Du kannst die Auswahl jederzeit über „Datenschutzeinstellungen“ ändern.",
+                    fontSize = 12.sp,
+                    color = Color(0xFF666666)
+                )
+                if (current != ConsentManager.BuiltinDecision.NONE) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        "Aktuelle Auswahl: " + when (current) {
+                            ConsentManager.BuiltinDecision.ACCEPT_PERSONALIZED -> "Personalisiert"
+                            ConsentManager.BuiltinDecision.ACCEPT_NPA -> "Nicht personalisiert"
+                            ConsentManager.BuiltinDecision.REJECT -> "Abgelehnt"
+                            else -> "-"
+                        },
+                        fontSize = 11.sp,
+                        color = Color(0xFF888888)
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.ACCEPT_PERSONALIZED) }) {
+                Text("Personalisiert")
+            }
+        },
+        dismissButton = {
+            Row {
+                TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.ACCEPT_NPA) }) {
+                    Text("Nicht personalisiert")
+                }
+                TextButton(onClick = { onChoice(ConsentManager.BuiltinDecision.REJECT) }) {
+                    Text("Ablehnen")
+                }
+            }
+        }
+    )
 }
 
 @Composable
