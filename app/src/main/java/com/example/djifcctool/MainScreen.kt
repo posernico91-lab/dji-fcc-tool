@@ -183,13 +183,13 @@ private fun ConfirmPatchDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
         text = {
             Column {
                 Text(
-                    "Es werden 2 Datenpakete (37 Bytes) an die DJI-Remote " +
-                        "geschickt, die den Funkmodus auf FCC umstellen.",
+                    "2 Pakete (37 Bytes) gehen an den Controller und stellen " +
+                        "den Funkmodus auf FCC um.",
                     fontSize = 14.sp
                 )
                 Spacer(Modifier.height(8.dp))
-                Text("• Drohne wird NICHT verändert (nur die Remote).", fontSize = 13.sp)
-                Text("• Reset = Drohne + Remote aus- und wieder einschalten.", fontSize = 13.sp)
+                Text("• Nur der Controller wird verändert, nicht die Drohne.", fontSize = 13.sp)
+                Text("• Danach Controller einmal aus- und wieder einschalten — Pflicht.", fontSize = 13.sp)
                 Text("• In CE-Regionen rechtlich problematisch.", fontSize = 13.sp)
             }
         },
@@ -437,30 +437,27 @@ private fun ActionCard(state: MainUiState, vm: MainViewModel) {
             when (state.step) {
                 WizardStep.SCAN -> {
                     HelpText(
-                        "Vorbereitung:\n" +
-                            "1. DJI Fly App komplett schließen (aus »Letzte Apps« wischen).\n" +
-                            "2. DJI-Remote (N1/N2 ohne Display) einschalten — Kontroll-LEDs müssen leuchten.\n" +
-                            "3. Drohne kann an oder aus sein — egal für diesen Schritt.\n" +
-                            "4. USB-OTG-Kabel in den UNTEREN USB-C-Port der Remote stecken,\n" +
-                            "   das andere Ende in dein Telefon.\n" +
-                            "5. Falls Android fragt, welche App geöffnet werden soll » RangeBoost FCC « wählen.\n" +
-                            "6. Tippe unten auf »Remote suchen«."
+                        "So geht's:\n" +
+                            "1. DJI Fly App schließen (aus den letzten Apps wischen).\n" +
+                            "2. Controller einschalten.\n" +
+                            "3. USB-OTG-Kabel in den UNTEREN USB-C-Port des Controllers stecken,\n" +
+                            "   das andere Ende ins Handy.\n" +
+                            "4. Falls Android fragt: »FCC Switch« wählen.\n" +
+                            "5. Auf »Controller suchen« tippen."
                     )
-                    PrimaryButton("Remote suchen", state.isBusy, vm::scanForRemote)
+                    PrimaryButton("Controller suchen", state.isBusy, vm::scanForRemote)
                 }
                 WizardStep.CONNECT -> {
                     HelpText(
-                        "Erlaube den USB-Zugriff im System-Dialog (Häkchen bei »Immer verwenden« setzen, " +
-                            "dann erscheint der Dialog beim nächsten Mal nicht mehr).\n" +
-                            "Falls kein Dialog erscheint, drücke erneut »Verbinden«."
+                        "USB-Zugriff im System-Dialog erlauben " +
+                            "(»Immer verwenden« anhaken → Dialog kommt nicht erneut).\n" +
+                            "Kein Dialog? → nochmal auf »Verbinden« tippen."
                     )
                     PrimaryButton("Verbinden", state.isBusy, vm::scanForRemote)
                 }
                 WizardStep.DETECT -> {
                     HelpText(
-                        "Verbindung steht. Tippe auf »Weiter zum FCC-Patch«.\n" +
-                            "(Hinweis: Die Remote sendet keinen Status-Query, daher gehen wir vom " +
-                            "Werkszustand CE aus — typisch für EU-Auslieferung.)"
+                        "Verbindung steht. Tippe auf »Weiter«, um den FCC-Patch vorzubereiten."
                     )
                     PrimaryButton("Weiter zum FCC-Patch", state.isBusy, vm::detectMode)
                     Spacer(Modifier.height(8.dp))
@@ -471,16 +468,16 @@ private fun ActionCard(state: MainUiState, vm: MainViewModel) {
                         PostPatchInstructions(onDisconnect = vm::disconnect)
                     } else {
                         HelpText(
-                            "Was passiert beim »FCC aktivieren«:\n" +
-                                "• Die App schickt 2 verifizierte DUML-Pakete (37 Bytes total) an die Remote.\n" +
-                                "• Die Remote schaltet ihren Funkchip in den FCC-Modus (mehr Sendeleistung,\n" +
-                                "  mehr Reichweite, andere Frequenzbänder).\n" +
-                                "• Die Drohne selbst wird NICHT verändert.\n" +
-                                "• Vor dem Senden erscheint ein Bestätigungsdialog."
+                            "Was passiert beim FCC aktivieren:\n" +
+                                "• 2 Pakete (37 Bytes) gehen an den Controller → Funkchip schaltet auf FCC.\n" +
+                                "• Mehr Sendeleistung, mehr Reichweite, 2.4 + 5.8 GHz.\n" +
+                                "• Die Drohne bleibt unverändert.\n\n" +
+                                "WICHTIG: Direkt nach dem Patch musst du den Controller " +
+                                "einmal aus- und wieder einschalten, damit FCC aktiv wird."
                         )
                         PrimaryButton("FCC aktivieren", state.isBusy, vm::applyFccPatch)
                         Spacer(Modifier.height(8.dp))
-                        SecondaryButton("Auf CE zurücksetzen (Power-Cycle)", state.isBusy, vm::resetToCe)
+                        SecondaryButton("Auf CE zurücksetzen", state.isBusy, vm::resetToCe)
                         Spacer(Modifier.height(8.dp))
                         SecondaryButton("Trennen", state.isBusy, vm::disconnect)
                     }
@@ -522,58 +519,42 @@ private fun PostPatchInstructions(onDisconnect: () -> Unit) {
     ) {
         Column(Modifier.padding(14.dp)) {
             Text(
-                "✅ FCC-Patch erfolgreich gesendet",
+                "✅ FCC-Patch gesendet — jetzt Controller neu starten!",
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )
             Spacer(Modifier.height(10.dp))
-            Text("So geht es jetzt weiter — bitte EXAKT in dieser Reihenfolge:", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+            Text("Genau in dieser Reihenfolge:", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
             Spacer(Modifier.height(6.dp))
-            NumberedStep(1, "USB-Kabel vom UNTEREN Port der Remote abziehen.")
-            NumberedStep(2,
-                "Remote AUS- und wieder EINSCHALTEN " +
-                    "(langer Druck auf den Power-Button bis alle LEDs aus sind, " +
-                    "dann erneut langer Druck zum Einschalten).\n" +
-                    "⚠️ WICHTIG: Drohne dabei NICHT ausschalten — sonst geht der Patch verloren " +
-                    "und du müsstest ihn auf der Remote erneut anwenden."
+            NumberedStep(1, "USB-Kabel vom Controller abziehen.")
+            NumberedStep(
+                2,
+                "Controller AUS- und wieder EINSCHALTEN " +
+                    "(langer Druck auf Power, bis alle LEDs aus sind — dann erneut langer Druck zum Einschalten).\n" +
+                    "⚠️ Pflicht: Ohne diesen Neustart wird FCC nicht aktiv.\n" +
+                    "⚠️ Drohne dabei NICHT ausschalten — sonst muss der Patch wiederholt werden."
             )
-            NumberedStep(3,
-                "Warten bis die Remote vollständig hochgefahren ist (alle Status-LEDs leuchten konstant)."
-            )
-            NumberedStep(4,
-                "Drohne einschalten (falls noch nicht an) und warten, bis Remote + Drohne gekoppelt sind " +
-                    "(Beep-Ton oder konstantes Leuchten der Verbindungs-LED)."
-            )
-            NumberedStep(5,
-                "USB-OTG-Kabel JETZT in den OBEREN USB-C-Port der Remote stecken (nicht mehr in den unteren!)."
-            )
-            NumberedStep(6,
-                "DJI Fly App öffnen — sie verbindet sich automatisch mit der Remote."
-            )
+            NumberedStep(3, "Warten, bis der Controller fertig hochgefahren ist (Status-LEDs leuchten konstant).")
+            NumberedStep(4, "Drohne einschalten und Verbindung abwarten (Beep / konstante LED).")
+            NumberedStep(5, "USB-OTG-Kabel jetzt in den OBEREN USB-C-Port des Controllers stecken.")
+            NumberedStep(6, "DJI Fly öffnen — verbindet sich automatisch.")
 
             Spacer(Modifier.height(12.dp))
-            Text("Wie erkenne ich in DJI Fly, dass FCC aktiv ist?", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text("FCC aktiv? So prüfst du es:", fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
-            BulletText("In der Karten-/Kameraansicht auf das Antennen-/Signal-Symbol oben rechts tippen → Reichweiten-Anzeige.")
-            BulletText(
-                "Im Menü: Zahnrad (Einstellungen) → »Übertragung« (oder »HD Übertragung«) → Eintrag »Übertragungsmodus« / »Bandbreite«." +
-                    " CE zeigt ~ 6 km Theorie / 1 km Praxis, FCC zeigt ~ 10–15 km Theorie."
-            )
-            BulletText(
-                "Im selben Menü das Feld »Frequenzband« / »Channel«: CE = nur 2.4 GHz im EU-Profil, " +
-                    "FCC = 2.4 GHz UND 5.8 GHz wählbar."
-            )
-            BulletText("Praxistest: Reichweitentest im freien Feld — über ~1,5 km Verbindung = FCC ist aktiv.")
+            BulletText("DJI Fly → Einstellungen → Übertragung: »Frequenzband« zeigt 2.4 + 5.8 GHz (CE = nur 2.4).")
+            BulletText("Reichweiten-Anzeige im Kamera-Bild: FCC ≈ 10–15 km Theorie, CE ≈ 6 km.")
+            BulletText("Praxistest: über ~1,5 km Verbindung im Freien = FCC läuft.")
 
             Spacer(Modifier.height(12.dp))
-            Text("Was bricht den FCC-Modus?", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text("Was bricht FCC?", fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
-            BulletText("Remote ausschalten → zurück zu CE. Patch muss erneut angewendet werden.")
-            BulletText("Remote-Firmware-Update → kann den Patch entfernen.")
-            BulletText("Drohne ausschalten allein bricht NICHT — solange die Remote an bleibt.")
+            BulletText("Controller ausschalten → zurück zu CE → Patch erneut anwenden.")
+            BulletText("Controller-Firmware-Update → entfernt evtl. den Patch.")
+            BulletText("Drohne aus reicht NICHT — solange der Controller an bleibt, hält FCC.")
 
             Spacer(Modifier.height(12.dp))
-            SecondaryButton("Fertig — App schließen / trennen", false, onDisconnect)
+            SecondaryButton("Fertig — trennen", false, onDisconnect)
         }
     }
 }
